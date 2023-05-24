@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --primary : #28B446;
+    --primaryGradient : linear-gradient(180deg, #28B446 0%, #00F134 100%);
+    --primaryGradientHover : linear-gradient(180deg, #00F134 0%, #28B446 100%);
+    --primaryHover : #0d992b ;
+    --secondary : #111827 ;
+    --grayText : #7e7e7e;
+    --dark : #111827 ;
+    --pure : #fff;
+}
+
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+#select-box-input{
+    padding : 6px 0 !important;
+    outline : none !important; 
+}
+
+.css-t3ipsp-control{
+    border : none !important;
+}
+
+@media print {
+    .report {
+        padding : 2rem;
+    }
+    .report table {
+        border : 1px solid var(--dark);
+    }
+    .report table td , .report table th {
+        border : 1px solid gray;
+    }
+}

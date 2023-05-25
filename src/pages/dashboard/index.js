@@ -8,16 +8,23 @@ import UsersTable from 'components/user/UsersTable';
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import fetcher from 'utils/fetcher';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     const [stats , setStats] = useState('');
     const { user } = useSelector(state => state.auth)
 
     const { isLoading , data } = useQuery('fetch-dashboard-stats' , () => {
         return fetcher(`/admin/dashboard-stats` , user);
     });
+
+    useEffect(() => {
+        if(!user) {
+            navigate('/login');
+        }
+    }, [])
     
     useEffect(() => {
         if(data) {

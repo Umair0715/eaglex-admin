@@ -21,9 +21,9 @@ const Conversations = () => {
     useEffect(() => {
         if(data) {
             setChats(() => data?.data?.data?.docs?.sort((a, b) => {
-                if (a.latestMessage.status === 'unread' && b.latestMessage.status === 'read') {
+                if (a?.latestMessage?.status === 'unread' && b?.latestMessage?.status === 'read') {
                     return -1; // 'unread' status comes first
-                } else if (a.latestMessage.status === 'read' && b.latestMessage.status === 'unread') {
+                } else if (a?.latestMessage?.status === 'read' && b?.latestMessage?.status === 'unread') {
                     return 1; 
                 } else {
                     return 0; 

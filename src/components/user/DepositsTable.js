@@ -1,90 +1,104 @@
 import Pagination from 'components/global/pagination';
-import React, { useRef, useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react'
+import { Link, useParams } from 'react-router-dom';
 import useClickOutside from 'utils/clickOutside';
 import usersData from 'data/users'
+import { useSelector } from 'react-redux';
+import { useQuery } from 'react-query';
+import fetcher from 'utils/fetcher';
+import Loader from 'components/global/Loader';
+import ItemNotFound from 'components/global/ItemNotFound';
+import moment from 'moment';
+import RequestStatus from 'components/global/RequestStatus';
 
 const DepositsTable = () => {
-    const dropMenuRef = useRef(null);
-    const [showDropMenu , setShowDropMenu] = useState(false);
-    const [selectedMenuIndex , setSelectedMenuIndex]  = useState(0);
-    const [selectAll , setSelectAll] = useState(false);
-    const [users, setUsers] = useState(usersData.map(item => (
-        {...item , isSelected : false }
-    )));
+    const { user } = useSelector(state => state.auth);
+    const { id } = useParams();
+    const [deposits , setDeposits] = useState('');
+    const [currentPage , setCurrentPage] = useState(1);
+    const [pages , setPages] = useState(1);
 
-    useClickOutside(dropMenuRef , () => setShowDropMenu(false));
+
+    const queryKey = ['fetch-deposits' , currentPage]
+    const { data : depositData , isLoading  } = useQuery(queryKey , () => {
+        return fetcher(`/deposit/user/${id}?page=${currentPage}` , user)
+    });
+
+
+    useEffect(() => {
+        if (depositData) {
+            setDeposits(depositData?.data?.data?.docs);
+            setCurrentPage(depositData?.data?.data?.page);
+            setPages(depositData?.data?.data?.pages);
+        }
+    } , [depositData]);
 
     return (
+        
         <div className=" shadow-bg overflow-x-auto rounded-lg">
-            <table className="w-full table-auto overflow-x-auto ">
-                <thead className="border-b text-sm">
-                    <tr className='bg-gradient text-white'>
-                        <th scope="col" className=" font-medium px-6 py-4 text-left">
-                            User Name
-                        </th>
-                        <th scope="col" className=" font-medium px-6 py-4 text-left">
-                            Deposit Amount
-                        </th>
-                        <th scope="col" className=" font-medium px-6 py-4 text-left">
-                            Offer Name
-                        </th>
-                        <th scope="col" className=" font-medium px-6 py-4 text-left">
-                            Company Name
-                        </th>
-                        <th scope="col" className=" font-medium px-6 py-4 text-left">
-                            Time Period
-                        </th>
-                        <th scope="col" className=" font-medium px-6 py-4 text-left">
-                            Date
-                        </th>
-                        <th scope="col" className=" font-medium px-6 py-4 text-center">
-                            Status
-                        </th>
-                    </tr>
-                </thead>
-                <tbody className='text-sm'>
-                   {
-                        users.slice(1)?.map((item , i) => (
-                            <tr
-                            key={item.id} 
-                            className="bg-white border-b transition duration-300 ease-in-out"
-                            >
-                            <td className="px-6 py-4 whitespace-nowrap underline text-primary">
-                                <Link to='/user-management/users/1'>
-                                    John Doe
-                                </Link>
-                            </td>
-                            <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
-                                5000
-                            </td>
-                            <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
-                                Opan
-                            </td>
-                            <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
-                                Tesla
-                            </td>
-                            <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
-                                10days
-                            </td>
-                            <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
-                                23 April 2023
-                            </td>
-                            <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-right text-orange-500">
-                                running
-                            </td>
-                        </tr>
-                        ))
-                   }
-                
-                </tbody>
-            </table>
             {
-                <Pagination 
-                currentPage={1}
-                pageCount={5}
-                setPage={''}
-                />
+                isLoading
+                ? 
+                    <Loader />
+                : 
+                deposits?.length > 0 
+                ? 
+                <>
+                    <table className="w-full table-auto overflow-x-auto ">
+                        <thead className="border-b text-sm">
+                            <tr className='bg-gradient text-white'>
+                                <th scope="col" className=" font-medium px-6 py-4 text-left">
+                                    Full Name
+                                </th>
+                                <th scope="col" className=" font-medium px-6 py-4 text-left">
+                                    Deposit Amount
+                                </th>
+                                <th scope="col" className=" font-medium px-6 py-4 text-left">
+                                    Date
+                                </th>
+                                <th scope="col" className=" font-medium px-6 py-4 text-center">
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody className='text-sm'>
+                        {
+                                deposits?.map((item , i) => (
+                                    <tr
+                                    key={item._id} 
+                                    className="bg-white border-b transition duration-300 ease-in-out"
+                                    >
+                                    <td className="px-6 py-4 whitespace-nowrap">
+                                        {item?.user?.firstName + " " + item?.user?.lastName}
+                                    </td>
+                                    <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
+                                        {item?.amount}
+                                    </td>
+                                    <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
+                                        {moment(item?.createdAt).format('DD MMM YYYY ')}
+                                    </td>
+                                    <td className=" px-6 py-4 whitespace-nowrap text-center text-orange-500">
+                                        <div className='flex items-center justify-center'>
+                                        <RequestStatus status={item?.status} />
+                                        </div>
+                                    </td>
+                                </tr>
+                                ))
+                        }
+                        
+                        </tbody>
+                    </table>
+                    {
+                        <Pagination 
+                        currentPage={currentPage}
+                        pageCount={pages}
+                        setPage={setCurrentPage}
+                        redux={false}
+                        />
+                    }
+                </>
+                : 
+                    <ItemNotFound message='No deposit found.' />
             }
         </div>
     )

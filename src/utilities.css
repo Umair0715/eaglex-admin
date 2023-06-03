@@ -13,7 +13,7 @@
 }
 
 .btn-primary {
-    @apply text-pure font-medium rounded-full cursor-pointer flex items-center gap-1 disabled:cursor-not-allowed; 
+    @apply text-pure font-medium rounded-full cursor-pointer flex items-center gap-1 disabled:cursor-not-allowed ; 
     background-image: var(--primaryGradientHover);
 }
 .btn-primary:hover , .bg-gradientHover{

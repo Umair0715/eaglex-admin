@@ -123,7 +123,7 @@ const Sidebar = () => {
                                         <span>Website Setup</span>
                                     </Link>
                                 </li>
-                                <li className={`${isActive('privacy-policy') ? 'drop-active' : ''}
+                                {/* <li className={`${isActive('privacy-policy') ? 'drop-active' : ''}
                                 dropMenu-item
                                 `}>
                                     <Link to='/settings/privacy-policy'>
@@ -138,18 +138,18 @@ const Sidebar = () => {
                                         <div className='dot'></div>
                                         <span>Terms & Conditions</span>
                                     </Link>
-                                </li>
+                                </li> */}
                             </ul>
                         }
                         
-                        <li 
+                        {/* <li 
                         className={`${isActive('notifications') ? 'active' : ''} sideMenu-item`}
                         >
                             <Link to='/notifications'>   
                                 <i className="uil uil-pricetag-alt"></i>
                                 <span>Notifications</span>
                             </Link>
-                        </li>
+                        </li> */}
                         <li 
                         className={`${isActive('accounts') ? 'active' : ''} sideMenu-item`}
                         >

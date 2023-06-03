@@ -101,11 +101,10 @@ const AddNewOfferForm = () => {
                     required
                     />
                     <Input
-                    label='Status'
+                    label='Status (optional)'
                     placeholder='Enter offer status'
                     value={status}
                     setValue={setStatus}
-                    required
                     />
                 </div>
                 <div>

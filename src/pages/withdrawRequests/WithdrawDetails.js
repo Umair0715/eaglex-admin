@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { ClipLoader } from 'react-spinners'
 import { editWithdrawRequest, getWithdrawDetails } from 'redux/actions/withdrawActions'
+import isBase64 from 'utils/isBase64'
 
 const WithdrawDetails = () => {
     const { id } = useParams();
@@ -40,7 +41,10 @@ const WithdrawDetails = () => {
     }, [item]);
 
     const updateHandler = async () => {
-        const data = { description , status , proof };
+        const data = { description , status };
+        if(isBase64(proof)){
+            data.proof = proof;
+        }
         dispatch(editWithdrawRequest(id , data));
     }
     

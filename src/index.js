@@ -14,6 +14,7 @@ import { Provider } from 'react-redux';
 // React Query
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import ChatContextProvider from 'context/chatContext';
 
 const queryClient = new QueryClient();
 
@@ -22,10 +23,12 @@ root.render(
 
     <DrawerContextProvider>
         <Provider store={store}>
-            <QueryClientProvider client={queryClient}>
-                <App />
-            <ReactQueryDevtools /> // Optional: Devtools for React Query
-            </QueryClientProvider>
+            <ChatContextProvider>
+                <QueryClientProvider client={queryClient}>
+                    <App />
+                {/* <ReactQueryDevtools />  */}
+                </QueryClientProvider>
+            </ChatContextProvider>
         </Provider>
     </DrawerContextProvider>
 );

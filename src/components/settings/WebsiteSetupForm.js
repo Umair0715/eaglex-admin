@@ -13,7 +13,8 @@ import toastError from 'utils/toastError';
 
 const WebsiteSetupForm = () => {
     const [minWithdraw , setMinWithdraw] = useState('');
-    const [withdrawFee , setWithdrawFee] = useState('');
+    const [platformFee , setPlatformFee] = useState('');
+    const [govtFee , setGovtFee] = useState('');
     const [bankName , setBankName] = useState('');
     const [accountHolder , setAccountHolder] = useState('');
     const [accountNo , setAccountNO] = useState('');
@@ -28,7 +29,8 @@ const WebsiteSetupForm = () => {
 
     const setStates = (doc) => {
         setMinWithdraw(doc?.minWithdraw);
-        setWithdrawFee(doc?.withdrawFee);
+        setPlatformFee(doc?.platformFee);
+        setGovtFee(doc?.govtFee);
         setBankName(doc?.bankName);
         setAccountHolder(doc?.accountHolder);
         setAccountNO(doc?.accountNo);
@@ -49,7 +51,8 @@ const WebsiteSetupForm = () => {
             setUpdateLoading(true);
             const settingsData = { 
                 minWithdraw : Number(minWithdraw) ,
-                withdrawFee : Number(withdrawFee) ,
+                platformFee : Number(platformFee) ,
+                govtFee : Number(govtFee) ,
                 accountHolder , bankName , accountNo ,
                 levelOneProfit : Number(levelOneProfit) ,
                 levelTwoProfit : Number(levelTwoProfit) ,
@@ -87,11 +90,20 @@ const WebsiteSetupForm = () => {
                                 setValue={setMinWithdraw}
                                 />         
                                 <Input 
-                                label="Withdraw Fee in %"
+                                label="Govt Tax in %"
                                 placeholder="5"
                                 type='number'
-                                value={withdrawFee}
-                                setValue={setWithdrawFee}
+                                value={govtFee}
+                                setValue={setGovtFee}
+                                />
+                            </div>
+                            <div>
+                                <Input 
+                                label="Service Charges in %"
+                                placeholder="2"
+                                type='number'
+                                value={platformFee}
+                                setValue={setPlatformFee}
                                 />
                             </div>
                         </div>

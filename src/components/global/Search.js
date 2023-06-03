@@ -1,7 +1,7 @@
 import { debounce } from 'lodash';
 
 
-const Search = ({ fetcher , timeout = 500 , setSearch }) => {
+const Search = ({ fetcher , timeout = 500 , setSearch , placeholder = 'Search...' }) => {
 
     const handleInputChange = debounce((event) => {
         const value = event.target.value;
@@ -15,7 +15,7 @@ const Search = ({ fetcher , timeout = 500 , setSearch }) => {
             <i className="uil uil-search text-grayText"></i>
             <input 
             type="text" 
-            placeholder='Search...' 
+            placeholder={placeholder} 
             className='outline-none border-none'
             onChange={handleInputChange}
             />

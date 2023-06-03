@@ -4,10 +4,14 @@ import ArrowLeftSvg from 'assets/svgs/ArrowLeft';
 import ArrowRightSvg from 'assets/svgs/ArrowRight';
 import { useDispatch } from 'react-redux';
 
-const Pagination = ({ pageCount , setPage , currentPage }) => {
+const Pagination = ({ pageCount , setPage , currentPage , redux = true }) => {
     const dispatch = useDispatch();
     const handlePageClick = ({ selected }) => {
-        dispatch(setPage(selected+1))
+        if(redux) {
+            dispatch(setPage(selected+1))
+        }else {
+            setPage(selected + 1)
+        }
     }
 
     return (

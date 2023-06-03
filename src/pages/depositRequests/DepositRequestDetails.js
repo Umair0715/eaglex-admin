@@ -108,9 +108,9 @@ const DepositRequestDetails = () => {
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
-                                        <h6 className='font-medium'>Transaction Id</h6>
+                                        <h6 className='font-medium'>Request Id</h6>
                                         <p className='text-primary'>
-                                            {item?.transactionId || 'Not Defined'}
+                                            {item?._id || 'Not Defined'}
                                         </p>
                                     </div>
 
@@ -124,9 +124,22 @@ const DepositRequestDetails = () => {
                                         />
                                     </div>
                                 </div>
-                                <div className='flex sm:flex-row flex-col gap-4 '>
+                                <div className='flex sm:flex-row flex-col gap-4 mt-6'>
                                     <div className='flex-1'>
-                                        {
+                                        <SelectBox
+                                            label='Status'
+                                            options={[
+                                                { label : 'Approved' , value : 'approved' } ,
+                                                { label : 'Declined' , value : 'declined' } ,
+                                                { label : 'Pending' , value : 'pending' } ,
+                                            ]}
+                                            value={status}
+                                            setValue={setStatus}
+                                            />
+
+
+
+                                        {/* {
                                             item?.status === 'approved'
                                             ? 
                                                 <Input 
@@ -146,7 +159,7 @@ const DepositRequestDetails = () => {
                                                 value={status}
                                                 setValue={setStatus}
                                                 />
-                                        }
+                                        } */}
                                     </div>
                                     {
                                         status !== 'declined'
@@ -173,11 +186,11 @@ const DepositRequestDetails = () => {
 
                                 <div 
                                 className='mt-8 pb-4'
-                                title={item?.status === 'approved' ? 'This request is already approved. Now you cannot update it.' : 'Save Changes'}
+                                title={'Save Changes'}
                                 >
                                     <button 
                                     className="btn-primary py-2 px-12"
-                                    disabled={item?.status === 'approved' || updateLoading}
+                                    disabled={updateLoading}
                                     onClick={updateHandler}
                                     >
                                         {

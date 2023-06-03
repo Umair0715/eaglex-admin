@@ -10,7 +10,7 @@ const RequestStatus = ({ status }) => {
                     ? 
                         'bg-yellow-100 text-yellow-500'
                     : 
-                    status === 'completed' || status === 'approved'
+                    status === 'completed' || status === 'approved' || status === 'claimed'
                     ?
                         'bg-green-100 text-green-500'
                     : 
@@ -27,7 +27,7 @@ const RequestStatus = ({ status }) => {
                     ? 
                         'bg-yellow-500'
                     : 
-                    status === 'completed' || status === 'approved'
+                    status === 'completed' || status === 'approved' || status === 'claimed'
                     ?
                         'bg-green-500'
                     : 

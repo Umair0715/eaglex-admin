@@ -35,9 +35,9 @@ const Header = () => {
                 <img src={Hamburger} alt="Hamburger" className='sm:w-[40px] w-[30px]' />
             </div>
             <div className='flex items-center sm:gap-8 gap-5'>
-                <Link to='/notifications' className='text-xl cursor-pointer'>
+                {/* <Link to='/notifications' className='text-xl cursor-pointer'>
                     <i className="uil uil-bell"></i>
-                </Link>
+                </Link> */}
                 <div className='relative'>
                     <div className='bg-darkSlate rounded-full w-[35px] h-[35px] flex items-center justify-center text-grayText text-xl cursor-pointer border p-0.5'
                     onClick={() => toggleMenu()}>

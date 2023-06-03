@@ -42,6 +42,3 @@
 .dropMenu-item.drop-active .dot {
     @apply bg-secondary;
 }
-
-
-

@@ -17,6 +17,7 @@ const Chatbox = () => {
     const [newMessage , setNewMessage] = useState('');
     const [messageType , setMessageType] = useState('text');
     const [fileName , setFileName] = useState('');
+    const [isTyping , setIsTyping] = useState(false);
 
     const [socket , setSocket] = useState(null);
     const { user } = useSelector(state => state.auth);
@@ -35,7 +36,10 @@ const Chatbox = () => {
 
         socket.on('new-message-recieved', (message) => {
             setNewMessage(message)
-        })
+        });
+
+        socket.on('start-typing' , () => setIsTyping(true));
+        socket.on('stop-typing' , () => setIsTyping(false));
     }, [socket , selectedChat])
 
     useEffect(() => {
@@ -102,6 +106,21 @@ const Chatbox = () => {
         reader.onloadend = () => {
             setMessage(reader.result);
         }
+    }
+
+
+    const [typingTimeout , setTypingTimeout] = useState(false);
+    const handleInputChange = (e) => {
+        setMessage(e.target.value);
+        socket?.emit('start-typing' , selectedChat?._id);
+
+        if (typingTimeout) clearTimeout(typingTimeout);
+
+        setTypingTimeout(
+            setTimeout(() => {
+                socket?.emit("stop-typing" , selectedChat?._id);
+            }, 1000)
+        );
     }
 
     return (
@@ -176,6 +195,7 @@ const Chatbox = () => {
                                 </div>
 
                         }
+                        {isTyping && <p className='ml-2'>Typing...</p>}
                         <div className='w-full table-header-shadow rounded-md flex items-center gap-3 mt-4 border-t border-t-gray-300'>
                             <form 
                             className='flex items-center justify-between w-full px-3 gap-4 py-6'
@@ -198,7 +218,7 @@ const Chatbox = () => {
                                     placeholder='Write message here...'
                                     className='rounded-full w-full py-2 px-4   bg-transparent outline-none  border border-gray-400 focus:border-primary'
                                     value={messageType === 'file' ? fileName : message}
-                                    onChange={e => setMessage(e.target.value)}
+                                    onChange={handleInputChange}
                                     readOnly={messageType==='file'}
                                     />
                                 </div>

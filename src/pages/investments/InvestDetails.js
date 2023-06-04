@@ -61,7 +61,7 @@ const InvestDetails = () => {
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Progress</h6>
                                         <p className='text-primary'>
-                                            {item?.progress}%
+                                            {item?.progress?.toFixed(2)}%
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
@@ -101,13 +101,13 @@ const InvestDetails = () => {
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Start Date</h6>
                                         <p className='text-primary'>
-                                            {moment(item?.startDate).format('DD MMM YYYY')}
+                                            {moment(item?.startDate).format('DD MMM YYYY hh:mm a')}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>End Date</h6>
                                         <p className='text-primary'>
-                                            {moment(item?.endDate).format('DD MMM YYYY')}
+                                            {moment(item?.endDate).format('DD MMM YYYY hh:mm a')}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>

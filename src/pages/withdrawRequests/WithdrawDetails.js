@@ -90,7 +90,7 @@ const WithdrawDetails = () => {
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Date</h6>
                                         <p className='text-primary'>
-                                            {moment(item?.createdAt).format('DD MMM YYYY')}
+                                            {moment(item?.createdAt).format('DD MMM YYYY hh:mm a')}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>

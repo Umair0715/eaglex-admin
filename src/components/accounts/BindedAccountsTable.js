@@ -53,8 +53,18 @@ const BindedAccountsTable = () => {
                             key={item._id} 
                             className="bg-white border-b transition duration-300 ease-in-out"
                             >
-                            <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
-                                {item?.user?.firstName + " " + item?.user?.lastName}
+                            <td className="px-6 py-4 whitespace-nowrap ">
+                                {
+                                    item?.user 
+                                    ? 
+                                    <Link
+                                    className='underline text-primary' 
+                                    to={`/user-management/users/${item?.user?._id}`}>
+                                        {item?.user?.firstName + " " + item?.user?.lastName}
+                                    </Link>
+                                    : 
+                                        <p className='text-red-500'>User Deleted</p>
+                                }
                             </td>
                             <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
                                 {item?.bankName}

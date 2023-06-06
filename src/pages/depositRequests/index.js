@@ -56,7 +56,7 @@ const DepositRequests = () => {
                         ?
                             <DepositRequestsTable />
                         : 
-                            <ItemNotFound message='No deposit request found.' />
+                            <ItemNotFound message='No Pending request found.' />
                     }
                 </div>
 

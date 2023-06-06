@@ -8,17 +8,25 @@ import { getAllUsers } from 'redux/actions/userActions';
 import { setCurrentPage } from 'redux/reducers/userReducer';
 import Loader from 'components/global/Loader';
 import ItemNotFound from 'components/global/ItemNotFound';
+import { deleteUser } from 'redux/actions/userActions';
+import { ClipLoader } from 'react-spinners';
 
 const UsersTable = ({ setRange}) => {
+    const dispatch = useDispatch();
     const dropMenuRef = useRef(null);
     const [showDropMenu , setShowDropMenu] = useState(false);
     const [selectedMenuIndex , setSelectedMenuIndex]  = useState(0);
 
-    const { users , loading , currentPage , pages } = useSelector(state => state.user);
+    const { users , loading , currentPage , pages , deleteLoading } = useSelector(state => state.user);
 
     useClickOutside(dropMenuRef , () => setShowDropMenu(false));
 
- 
+    const deleteHandler = async (id) => {
+        if(window.confirm('Are you sure? You want to delete this user?')) {
+            await dispatch(deleteUser(id))
+            setShowDropMenu(false);
+        }
+    }
 
     return (
         <div className=" shadow-bg overflow-x-auto rounded-lg">
@@ -110,12 +118,20 @@ const UsersTable = ({ setRange}) => {
                                                         className='py-3 font-medium hover:bg-gray-100 px-4 cursor-pointer flex items-center gap-1'>
                                                             <span>Edit User</span>
                                                         </Link>
-                                                        <div className='py-3 font-medium hover:bg-gray-100 px-4 cursor-pointer flex items-center gap-1'>
+                                                        {/* <div className='py-3 font-medium hover:bg-gray-100 px-4 cursor-pointer flex items-center gap-1'>
                                                             <span>Block User</span>
-                                                        </div>
-                                                        {/* <div className='py-3 font-medium hover:bg-gray-100 px-4 cursor-pointer'>
-                                                            Delete
                                                         </div> */}
+                                                        <div className='py-3 font-medium hover:bg-gray-100 px-4 cursor-pointer'
+                                                        onClick={() => deleteHandler(item?._id)}
+                                                        >
+                                                            {
+                                                                deleteLoading 
+                                                                ? 
+                                                                    <ClipLoader size={15} />
+                                                                : 
+                                                                    'Delete'
+                                                            }
+                                                        </div>
                                                     </div>
                                                 }
                                             </div>

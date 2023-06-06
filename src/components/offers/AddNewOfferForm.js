@@ -40,8 +40,8 @@ const AddNewOfferForm = () => {
         const data = { 
             name , isActive : active , status , 
             depositRange : [parseInt(depositRange.split('-')[0]) , parseInt(depositRange.split('-')[1])] ,
-            timePeriod : parseInt(timePeriod) ,
-            profit : parseInt(profit) ,
+            timePeriod : Number(timePeriod) ,
+            profit : Number(profit) ,
             image , company 
         }
         dispatch(createOffer(data , navigate));

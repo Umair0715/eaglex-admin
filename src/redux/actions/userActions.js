@@ -1,5 +1,5 @@
 import Axios from 'config/api';
-import { setLoading, setUsers , setUpdateLoading , setUserDetails , removeUser , updateUser , setCurrentPage , setPages , setDocsCount } from 'redux/reducers/userReducer';
+import { setLoading, setUsers , setUpdateLoading , setUserDetails , removeUser , updateUser , setCurrentPage , setPages , setDocsCount, setDeleteLoading } from 'redux/reducers/userReducer';
 import { toast } from 'react-toastify';
 import toastError from 'utils/toastError';
 
@@ -60,18 +60,18 @@ export const editUser = (userId , updateData ) => async (dispatch , getState) =>
 }
 
 export const deleteUser = (userId) => async (dispatch , getState) => {
-    dispatch(setLoading(true))
+    dispatch(setDeleteLoading(true))
     try {
-        const { data : { data : { doc , message } } } = await Axios.delete(`/user/delete/${userId}` , {
+        const { data : { data : { message } } } = await Axios.delete(`/user/delete/${userId}` , {
             headers : {
                 Authorization : `Bearer ${getState().auth.user.token}`
             }
         } );
         toast.success(message)
-        dispatch(updateUser(doc));
-        dispatch(setLoading(false));
+        dispatch(removeUser(userId));
+        dispatch(setDeleteLoading(false));
     } catch (err) {
-        dispatch(setLoading(false));
+        dispatch(setDeleteLoading(false));
         console.log('error' , err);
         toastError(err)
     }

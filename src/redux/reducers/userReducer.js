@@ -7,6 +7,7 @@ const userSlice = createSlice({
         userDetails : null ,
         loading : false ,
         updateLoading : false ,
+        deleteLoading : false ,
         currentPage : 1 ,
         pages : 1 ,
         docsCount : 1
@@ -20,7 +21,7 @@ const userSlice = createSlice({
             state.users[index] = action.payload;
         } ,
         removeUser (state , action) {
-            state.users = state.users.filter(i => i._id !== action.payload._id);
+            state.users = state.users.filter(i => i._id !== action.payload);
         } , 
         setUserDetails (state , action) {
             state.userDetails = action.payload;
@@ -30,6 +31,9 @@ const userSlice = createSlice({
         } ,
         setUpdateLoading(state , action) {
             state.updateLoading = action.payload;
+        } ,
+        setDeleteLoading (state , action) {
+            state.deleteLoading = action.payload 
         } ,
         setCurrentPage (state ,action) {
             state.currentPage = action.payload;
@@ -43,6 +47,6 @@ const userSlice = createSlice({
     }
 });
 
-export const { setUsers , updateUser , removeUser , setUserDetails , setUpdateLoading , setLoading , setCurrentPage , setDocsCount , setPages } = userSlice.actions;
+export const { setUsers , updateUser , removeUser , setUserDetails , setUpdateLoading , setLoading , setDeleteLoading , setCurrentPage , setDocsCount , setPages } = userSlice.actions;
 
 export default userSlice.reducer;

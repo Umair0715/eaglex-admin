@@ -42,7 +42,7 @@ const WithdrawDetails = () => {
 
     const updateHandler = async () => {
         const data = { description , status };
-        if(isBase64(proof)){
+        if(proof && isBase64(proof)){
             data.proof = proof;
         }
         dispatch(editWithdrawRequest(id , data));
@@ -66,18 +66,20 @@ const WithdrawDetails = () => {
                                 <div className='flex flex-col gap-4'>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>First Name</h6>
-                                        <p className='text-primary'>{item?.user?.firstName}</p>
+                                        <p className={item?.user ? 'text-primary' : 'text-red-500'}>
+                                            {item?.user?.firstName || 'User Deleted'}
+                                        </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Last Name</h6>
-                                        <p className='text-primary'>
-                                            {item?.user?.lastName}
+                                        <p className={item?.user ? 'text-primary' : 'text-red-500'}>
+                                            {item?.user?.lastName || 'User Deleted'}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Phone No</h6>
-                                        <p className='text-primary'>
-                                            {item?.user?.phone}
+                                        <p className={item?.user ? 'text-primary' : 'text-red-500'}>
+                                            {item?.user?.phone || '//'}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>

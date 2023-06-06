@@ -19,7 +19,7 @@ const DepositRequestDetails = () => {
     const navigate = useNavigate();
 
     const [status , setStatus] = useState('');
-    const [transferAmount , setTransferAmount] = useState();
+    const [transferAmount , setTransferAmount] = useState('');
     const [description , setDescription] = useState('');
 
     const { loading , depositDetails : item , updateLoading } = useSelector(state => state.deposit); 
@@ -39,9 +39,10 @@ const DepositRequestDetails = () => {
     const updateHandler = async () => {
         const data = { description , status };
         if(status === 'approved') {
-            data.transferAmount = transferAmount;
+            data.transferAmount = Number(transferAmount);
         }
-        dispatch(editDeposit(id , data));
+        await dispatch(editDeposit(id , data));
+        setTransferAmount('');
     }
     
 
@@ -62,18 +63,21 @@ const DepositRequestDetails = () => {
                                 <div className='flex flex-col gap-4'>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>First Name</h6>
-                                        <p className='text-primary'>{item?.user?.firstName}</p>
+                                        <p 
+                                        className={item?.user ? 'text-primary' : 'text-red-500'}>
+                                            {item?.user?.firstName || 'Deleted User'}
+                                        </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Last Name</h6>
-                                        <p className='text-primary'>
-                                            {item?.user?.lastName}
+                                        <p className={item?.user ? 'text-primary' : 'text-red-500'}>
+                                            {item?.user?.lastName || 'Deleted User'}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Phone No</h6>
-                                        <p className='text-primary'>
-                                            {item?.user?.phone}
+                                        <p className={item?.user ? 'text-primary' : 'text-red-500'}>
+                                            {item?.user?.phone || '//'}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
@@ -86,7 +90,7 @@ const DepositRequestDetails = () => {
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Date</h6>
                                         <p className='text-primary'>
-                                            {moment(item?.createdAt).format('DD MMM YYYY hh:mm aw')}
+                                            {moment(item?.createdAt).format('DD MMM YYYY hh:mm a')}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>

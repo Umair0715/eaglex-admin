@@ -59,7 +59,7 @@ export const getOfferDetails = (offerId) => async (dispatch , getState) => {
     }
 }
 
-export const editOffer = (offerId , updateData ) => async (dispatch , getState) => {
+export const editOffer = (offerId , updateData , navigate) => async (dispatch , getState) => {
     dispatch(setUpdateLoading(true))
     try {
         const { data : { data : { doc , message } } } = await Axios.put(`/offer/${offerId}` , updateData , {
@@ -69,6 +69,7 @@ export const editOffer = (offerId , updateData ) => async (dispatch , getState) 
         });
         toast.success(message)
         dispatch(updateDoc(doc));
+        navigate('/offers-management/offers')
         dispatch(setUpdateLoading(false));
     } catch (err) {
         dispatch(setUpdateLoading(false));

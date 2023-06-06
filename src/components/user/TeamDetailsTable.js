@@ -26,7 +26,9 @@ const TeamDetailsTable = () => {
         if(data) {
             setMembers(data?.data?.data?.teamMembers);
         }
-    } , [data])
+    } , [data]);
+
+    console.log({ data })
 
     return (
         <div>

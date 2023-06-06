@@ -90,15 +90,6 @@ const WebsiteSetupForm = () => {
                                 setValue={setMinWithdraw}
                                 />         
                                 <Input 
-                                label="Govt Tax in %"
-                                placeholder="5"
-                                type='number'
-                                value={govtFee}
-                                setValue={setGovtFee}
-                                />
-                            </div>
-                            <div>
-                                <Input 
                                 label="Service Charges in %"
                                 placeholder="2"
                                 type='number'
@@ -106,6 +97,7 @@ const WebsiteSetupForm = () => {
                                 setValue={setPlatformFee}
                                 />
                             </div>
+                            
                         </div>
                         <div className='mb-'>
                             <Heading title='Bank Details' showIcon={false} />

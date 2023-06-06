@@ -37,18 +37,28 @@ const InvestDetails = () => {
                                 <div className='flex flex-col gap-4'>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>First Name</h6>
-                                        <p className='text-primary'>{item?.user?.firstName}</p>
+                                        {
+                                            item?.user 
+                                            ? 
+                                            <p className='text-primary'>{item?.user?.firstName}</p>
+                                            : 
+                                            <p className='text-red-500'>Deleted User</p>
+                                        }
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Last Name</h6>
-                                        <p className='text-primary'>
-                                            {item?.user?.lastName}
-                                        </p>
+                                        {
+                                            item?.user 
+                                            ? 
+                                            <p className='text-primary'>{item?.user?.firstName}</p>
+                                            : 
+                                            <p className='text-red-500'>Deleted User</p>
+                                        }
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Phone No</h6>
                                         <p className='text-primary'>
-                                            {item?.user?.phone}
+                                            {item?.user?.phone || '//'}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>

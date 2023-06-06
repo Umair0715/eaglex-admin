@@ -45,10 +45,18 @@ const RecentlyInvested = ({ stats }) => {
                             key={item._id} 
                             className="bg-white border-b transition duration-300 ease-in-out"
                             >
-                            <td className="px-6 py-4 whitespace-nowrap underline text-primary">
-                                <Link to={`/user-management/users/${item?.user?._id}`}>
-                                    {item?.user?.firstName + " " + item?.user?.lastName}
-                                </Link>
+                            <td className="px-6 py-4 whitespace-nowrap ">
+                                {
+                                    item?.user 
+                                    ? 
+                                    <Link
+                                    className='underline text-primary' 
+                                    to={`/user-management/users/${item?.user?._id}`}>
+                                        {item?.user?.firstName + " " + item?.user?.lastName}
+                                    </Link>
+                                    : 
+                                        <p>Deleted User</p>
+                                }
                             </td>
                             <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
                                 {item?.offer?.name}

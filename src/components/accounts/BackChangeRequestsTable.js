@@ -1,6 +1,7 @@
 import RequestStatus from 'components/global/RequestStatus';
 import Pagination from 'components/global/pagination';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { editChangeBank } from 'redux/actions/changeBankActions';
 import { setCurrentPage } from 'redux/reducers/changeBankReducer';
 
@@ -58,9 +59,19 @@ const BankChangeRequestsTable = () => {
                                 key={item._id} 
                                 className="bg-white border-b transition duration-300 ease-in-out"
                                 >
-                                <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
-                                    {item?.user?.firstName + " " + item?.user?.lastName}
-                                </td>
+                                <td className="px-6 py-4 whitespace-nowrap ">
+                                {
+                                    item?.user 
+                                    ? 
+                                    <Link
+                                    className='underline text-primary' 
+                                    to={`/user-management/users/${item?.user?._id}`}>
+                                        {item?.user?.firstName + " " + item?.user?.lastName}
+                                    </Link>
+                                    : 
+                                        <p className='text-red-500'>User Deleted</p>
+                                }
+                            </td>
                                 <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
                                     {item?.prevBankDetails?.bankName}
                                 </td>
@@ -87,7 +98,7 @@ const BankChangeRequestsTable = () => {
                                         <button 
                                         className='accept disabled:cursor-not-allowed' 
                                         title={item?.status === 'approved' ? "Approved request can't be changed." :'Accept Change Request '}
-                                        disabled={item?.status === 'approved'}
+                                        disabled={item?.status === 'approved' || !item?.user}
                                         onClick={() => updateHandler(item?._id , 'approved')}
                                         >
                                             <i className="uil uil-check"></i>

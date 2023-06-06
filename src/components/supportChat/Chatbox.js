@@ -7,6 +7,7 @@ import { ClipLoader, HashLoader } from 'react-spinners';
 import toastError from 'utils/toastError';
 import { io } from 'socket.io-client';
 import TimeAgo from 'react-timeago'
+import ImagePopup from './ImagePopup';
 
 const Chatbox = () => {
     const { selectedChat } = useChatContext();
@@ -123,6 +124,14 @@ const Chatbox = () => {
         );
     }
 
+    const [selectedImage , setSelectedImage] = useState('');
+    const [showImagePopup , setShowImagePopup] = useState(false);
+
+    const imageClickHandler = (image) => {
+        setSelectedImage(image);
+        setShowImagePopup(true);
+    }
+
     return (
         <div className='w-full shadow-bg'>
             {
@@ -170,13 +179,15 @@ const Chatbox = () => {
                                                             {item?.message}
                                                         </div>
                                                         : 
-                                                        <div className={`w-fit max-w-[300px] max-h-[250px] h-auto rounded-md border p-3 text-[15px] 
+                                                        <div className={`max-w-[300px] overflow-hidden rounded-md border text-[15px] cursor-pointer
                                                         ${item?.sender?._id === user?._id ? "bg-primary text-white" : "bg-gray-200 text-black"}
-                                                        `}>
+                                                        `}
+                                                        onClick={() => imageClickHandler(item?.message)}
+                                                        >
                                                             <img 
                                                             src={baseURL + item?.message}
                                                             alt="" 
-                                                            className='w-full h-[230px] object-cover rounded-md'
+                                                            className='w-full h-auto'
                                                             />
                                                         </div>
                                                     }
@@ -243,6 +254,13 @@ const Chatbox = () => {
                     <div className=' flex items-center justify-center text-grayText font-semibold text-2xl w-full h-[510px]'>
                         No Chat is Selected
                     </div>
+            }
+
+            { 
+                showImagePopup && <ImagePopup 
+                setShowImagePopup={setShowImagePopup} 
+                selectedImage={selectedImage}
+                />
             }
         </div>
     )

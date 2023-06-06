@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import { createOffer, editOffer, getOfferDetails } from 'redux/actions/offerActions';
+import isBase64 from 'utils/isBase64';
 import toastError from 'utils/toastError';
 
 const AddNewOfferForm = () => {
@@ -76,11 +77,14 @@ const AddNewOfferForm = () => {
         const data = { 
             name , isActive : active , status , 
             depositRange : [parseInt(depositRange.split('-')[0]) , parseInt(depositRange.split('-')[1])] ,
-            timePeriod : parseInt(timePeriod) ,
-            profit : parseInt(profit) ,
-            image , company 
+            timePeriod : Number(timePeriod) ,
+            profit : Number(profit) ,
+            company 
         }
-        dispatch(editOffer(id , data));
+        if(isBase64(image)) {
+            data.image = image;
+        }
+        dispatch(editOffer(id , data , navigate));
     }
 
     return (

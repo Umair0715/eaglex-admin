@@ -7,7 +7,7 @@ import toastError from 'utils/toastError';
 export const getAllDeposits = () => async (dispatch , getState) => {
     dispatch(setLoading(true))
     try {
-        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/deposit` , {
+        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/deposit?page=${getState()?.deposit?.currentPage}` , {
             headers : {
                 Authorization : `Bearer ${getState().auth.user.token}`
             }

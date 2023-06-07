@@ -7,7 +7,7 @@ import toastError from 'utils/toastError';
 export const getAllInvests = () => async (dispatch , getState) => {
     dispatch(setLoading(true))
     try {
-        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/invest` , {
+        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/invest?page=${getState()?.invest?.currentPage}` , {
             headers : {
                 Authorization : `Bearer ${getState().auth.user.token}`
             }

@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
-import { setCurrentPage } from 'redux/reducers/depositReducer';
+import { setCurrentPage } from 'redux/reducers/investReducer';
 import RequestStatus from 'components/global/RequestStatus';
 
 const InvestsTable = () => {

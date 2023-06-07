@@ -19,7 +19,7 @@ const Investments = () => {
     const { user } = useSelector(state => state.auth);
 
     const queryKey = ['fetch-invest-requests' , currentPage , status];
-    const url = `/invest?status=${status}&currentPage=${currentPage}`;
+    const url = `/invest?status=${status}&page=${currentPage}`;
     const { data , isLoading } = useQuery(queryKey , () => fetcher(url , user) );
 
     useEffect(() => {

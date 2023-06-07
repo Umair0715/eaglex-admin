@@ -22,7 +22,7 @@ const CompanyTable = () => {
 
     useEffect(() => {
         dispatch(getAllCompanies());
-    }, []);
+    }, [currentPage]);
 
     const deleteHandler = async (id) => {
         if(window.confirm('Are you sure? You want to delete this company?')){

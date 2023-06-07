@@ -18,7 +18,7 @@ const Deposits = () => {
     const { user } = useSelector(state => state.auth);
 
     const queryKey = ['fetch-deposit-requests' , currentPage , status];
-    const url = `/deposit?status=${status}&currentPage=${currentPage}`;
+    const url = `/deposit?status=${status}&page=${currentPage}`;
     const { data , isLoading } = useQuery(queryKey , () => fetcher(url , user) );
 
     useEffect(() => {

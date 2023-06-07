@@ -18,7 +18,7 @@ const WithdrawRequests = () => {
     const { user } = useSelector(state => state.auth);
 
     const queryKey = ['fetch-withdraw-requests' , currentPage , status];
-    const url = `/withdraw?status=${status}&currentPage=${currentPage}`;
+    const url = `/withdraw?status=${status}&page=${currentPage}`;
     const { data , isLoading } = useQuery(queryKey , () => fetcher(url , user) );
 
     useEffect(() => {

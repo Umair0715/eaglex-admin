@@ -25,7 +25,7 @@ export const createCompany = (data , navigate) => async (dispatch , getState) =>
 export const getAllCompanies = () => async (dispatch , getState) => {
     dispatch(setLoading(true))
     try {
-        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/company` , {
+        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/company?page=${getState()?.company?.currentPage}` , {
             headers : {
                 Authorization : `Bearer ${getState().auth.user.token}`
             }

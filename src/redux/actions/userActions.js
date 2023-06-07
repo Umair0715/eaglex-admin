@@ -7,7 +7,7 @@ import toastError from 'utils/toastError';
 export const getAllUsers = (range , keyword = '') => async (dispatch , getState) => {
     dispatch(setLoading(true))
     try {
-        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/user/all?range=${range}&keyword=${keyword}` , {
+        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/user/all?range=${range}&keyword=${keyword}&page=${getState()?.user?.currentPage}` , {
             headers : {
                 Authorization : `Bearer ${getState().auth.user.token}`
             }

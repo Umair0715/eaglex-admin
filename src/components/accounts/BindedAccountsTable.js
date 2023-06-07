@@ -2,7 +2,6 @@ import Pagination from 'components/global/pagination';
 import React, { useRef, useState } from 'react'
 import { Link } from 'react-router-dom';
 import useClickOutside from 'utils/clickOutside';
-import usersData from 'data/users'
 import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPage } from 'redux/reducers/bankReducer';
 import { deleteBank } from 'redux/actions/bankActions';

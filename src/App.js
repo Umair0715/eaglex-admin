@@ -1,4 +1,5 @@
 import Sidebar from "components/global/sidebar";
+import { useApi } from "config/api";
 import BankChangeRequests from "pages/accounts/BankChangeRequests";
 import BindedAccounts from "pages/accounts/BindedAccounts";
 import EditBindedAccount from "pages/accounts/EditBindedAccount";
@@ -36,6 +37,7 @@ import { ToastContainer } from "react-toastify";
 
 
 function App() {
+    const api = useApi();
     const [isLoginPage , setIsLoginPage] = useState(false);
 
     return (
@@ -47,7 +49,7 @@ function App() {
                 closeOnClick
                 pauseOnHover
             />
-            <Router>
+            <main>
             {!isLoginPage && <Sidebar />}
                 <Routes>
                     <Route path='/' element={<Dashboard />} />
@@ -159,7 +161,7 @@ function App() {
                     />
                     
                 </Routes>
-            </Router>
+            </main>
         </div> 
     );
 }

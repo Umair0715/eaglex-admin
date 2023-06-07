@@ -20,18 +20,20 @@ export const login = (data , navigate ) => async (dispatch) => {
     }
 }
 
-export const logout = (navigate) => async(dispatch , getState) => {
+export const logout = (navigate , showToast = true) => async(dispatch) => {
     dispatch(setLoading(true));
     try {
-        Axios('/admin/logout' );
+        await Axios('/admin/logout');
         dispatch(setUser(null));
-        localStorage.setItem('user' , null);
+        localStorage.removeItem('user');
         dispatch(setLoading(false));
         navigate('/login');
-        toast.success('Logged out successfully.')
+        if(showToast){
+            toast.success('Logged out successfully.')
+        }
     } catch (err) {
         dispatch(setLoading(false));
         console.log('logout error' , err);
-        toastError(err)
+        toastError(err);
     }
 }

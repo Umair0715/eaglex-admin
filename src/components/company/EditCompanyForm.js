@@ -74,11 +74,10 @@ const AddCompanyForm = () => {
                             required
                             />
                             <Input
-                            label='Registration Id'
+                            label='Registration Id (optional)'
                             placeholder='Enter registration id'
                             value={registrationId}
                             setValue={setRegistrationId}
-                            required
                             />
                         </div>
                         <div className='flex sm:flex-row flex-col items-center gap-4'>
@@ -106,8 +105,8 @@ const AddCompanyForm = () => {
                             required
                             />
                             <Input
-                            label='Owner Name'
-                            placeholder='Enter Company Owner Name'
+                            label='CEO'
+                            placeholder='Enter Company CEO Name'
                             value={owner}
                             setValue={setOwner}
                             required

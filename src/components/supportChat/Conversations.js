@@ -102,7 +102,7 @@ const Conversations = () => {
                                     <img 
                                     src={baseURL + chat?.user?.image} 
                                     alt={chat?.chatName} 
-                                    className='w-[40px] h-[40px] rounded-full'
+                                    className='w-[40px] h-[40px] rounded-full object-cover'
                                     />
                                 </div>
                                 <div>

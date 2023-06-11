@@ -10,7 +10,7 @@ const userSlice = createSlice({
         deleteLoading : false ,
         currentPage : 1 ,
         pages : 1 ,
-        docsCount : 1
+        docsCount : 0
     } , 
     reducers : {
         setUsers (state , action) {

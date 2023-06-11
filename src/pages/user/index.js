@@ -14,7 +14,7 @@ const Users = () => {
     const [search , setSearch] = useState('');
 
     const dispatch = useDispatch();
-    const { currentPage  } = useSelector(state => state.user);
+    const { currentPage , docsCount  } = useSelector(state => state.user);
     
     useEffect(() => {
         dispatch(getAllUsers(range, search))
@@ -31,8 +31,11 @@ const Users = () => {
                     <BackBtn />
                 </div>
                 <div className='mt-8 flex sm:flex-row flex-col gap-4 items-center justify-between'>
-                    <div>
+                    <div className='flex items-center gap-4'>
                         <Heading title='All Users' icon='clipboard-notes'  />
+                        <div className='bg-gray-200 font-semibold rounded-md px-2 py-0.5 text-lg text-primary'>
+                            {docsCount}
+                        </div>
                     </div>
                     <div>
                         <Search setSearch={setSearch} fetcher={searchFetcher} />

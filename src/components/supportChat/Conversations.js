@@ -100,7 +100,7 @@ const Conversations = () => {
                             >
                                 <div className="rounded-full border p-1">
                                     <img 
-                                    src={baseURL + '/user/' + chat?.user?.image} 
+                                    src={baseURL + chat?.user?.image} 
                                     alt={chat?.chatName} 
                                     className='w-[40px] h-[40px] rounded-full'
                                     />

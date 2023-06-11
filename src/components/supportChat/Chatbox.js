@@ -141,7 +141,7 @@ const Chatbox = () => {
                         <div className='py-4 px-4 flex items-center gap-4 border-b'>
                             <div className='border rounded-full p-1'>
                                 <img 
-                                src={baseURL + '/user/' + selectedChat?.user?.image} 
+                                src={baseURL + selectedChat?.user?.image} 
                                 alt={selectedChat?.user?.firstName} 
                                 className='w-[50px] h-[50px] rounded-full object-cover'
                                 />

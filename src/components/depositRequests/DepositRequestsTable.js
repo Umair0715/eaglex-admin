@@ -35,7 +35,7 @@ const DepositRequestsTable = () => {
                         <th scope="col" className=" font-medium px-6 py-4 text-left">
                             Deposit Amount
                         </th>
-                        <th scope="col" className=" font-medium px-6 py-4 text-left">
+                        <th scope="col" className=" font-medium px-6 py-4 text-center">
                             From bank 
                         </th>
                         <th scope="col" className=" font-medium px-6 py-4 text-left">

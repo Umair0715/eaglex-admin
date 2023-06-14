@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "redux/actions/authActions";
 
 // export const baseURL = 'http://203.161.32.12:5500';
-export const baseURL = 'https://server.eaglexgroup.com';
-// export const baseURL = 'http://localhost:5500';
+// export const baseURL = 'https://server.eaglexgroup.com';
+export const baseURL = 'http://localhost:5500';
 
 
 

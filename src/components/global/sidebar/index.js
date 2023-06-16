@@ -142,14 +142,14 @@ const Sidebar = () => {
                             </ul>
                         }
                         
-                        {/* <li 
+                        <li 
                         className={`${isActive('notifications') ? 'active' : ''} sideMenu-item`}
                         >
                             <Link to='/notifications'>   
                                 <i className="uil uil-pricetag-alt"></i>
                                 <span>Notifications</span>
                             </Link>
-                        </li> */}
+                        </li>
                         <li 
                         className={`${isActive('accounts') ? 'active' : ''} sideMenu-item`}
                         >

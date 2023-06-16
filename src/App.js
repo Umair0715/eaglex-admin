@@ -108,7 +108,7 @@ function App() {
                     element={<SendNotification/>} 
                     />
                     <Route 
-                    path='/notifications/edit-notification' 
+                    path='/notifications/edit-notification/:id' 
                     element={<EditNotification/>} 
                     />
                     <Route 
@@ -159,6 +159,7 @@ function App() {
                     path='/investments/details/:id'
                     element={<InvestDetails />}
                     />
+                    
                     
                 </Routes>
             </main>

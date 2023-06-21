@@ -86,6 +86,15 @@ const DepositRequestDetails = () => {
                                             {item?.amount}
                                         </p>
                                     </div>
+                                    {
+                                        item?.status === 'approved' &&
+                                        <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
+                                            <h6 className='font-medium'>Transfered Amount</h6>
+                                            <p className='text-primary'>
+                                                {item?.transferAmount}
+                                            </p>
+                                        </div>
+                                    }
                                     
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Date</h6>

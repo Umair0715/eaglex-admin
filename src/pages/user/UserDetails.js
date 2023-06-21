@@ -23,7 +23,7 @@ const UserDetails = () => {
     const [balance , setBalance] = useState('');
     const [walletLoading , setWalletLoading] = useState(false);
 
-    const { data : userData , isLoading : userLoading } = useQuery('fetch-user-details' , () => {
+    const { data : userData , isLoading : userLoading } = useQuery(['fetch-user-details' , id] , () => {
         return fetcher(`/user/details/${id}` , user)
     });
     
@@ -31,7 +31,7 @@ const UserDetails = () => {
     useEffect(() => {
         if (userData) {
             setUserDetails(userData?.data?.data?.doc);
-            setBalance(userData?.data?.data?.doc?.wallet?.totalBalance)
+            setBalance(userData?.data?.data?.doc?.wallet?.totalBalance?.toFixed(2))
         }
     }, [userData])
 
@@ -70,7 +70,7 @@ const UserDetails = () => {
                         : 
                         <div className='bg-gradientHover rounded-lg py-5 mt-4 text-white flex flex-col items-center justify-center gap-4'>
                             <img 
-                            src={baseURL + '/user/' + userDetails?.image} 
+                            src={baseURL + userDetails?.image} 
                             alt={userDetails?.firstName} 
                             className='w-[100px] h-[100px] rounded-full object-cover'
                             />

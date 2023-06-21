@@ -14,21 +14,27 @@ const TeamDetailsTable = () => {
     const { id } = useParams();
     const [members , setMembers] = useState([]);
     const [level , setLevel] = useState(null);
+    const [teamDetails , setTeamDetails] = useState('');
 
     const { user } = useSelector(state => state.auth);
 
-    const queryKey = ['fetch-team' , level]
+    const queryKey = ['fetch-team' , level , id ]
     const { data , isLoading } = useQuery(queryKey , () => {
         return fetcher(`/user/team/${id}?level=${level}` , user)
     });
 
     useEffect(() => {
+        window.scrollTo(0,0);
+    }, [id]);
+
+    useEffect(() => {
         if(data) {
             setMembers(data?.data?.data?.teamMembers);
+            setTeamDetails(data?.data?.data);
         }
     } , [data]);
 
-    console.log({ data })
+    console.log({ teamData : data })
 
     return (
         <div>
@@ -44,6 +50,37 @@ const TeamDetailsTable = () => {
                         <option value={2}>Level 2</option>
                         <option value={3}>Level 3</option>
                     </select>
+                </div>
+            </div>
+            <div className='shadow-bg p-3 rounded-md mt-4 text-dark flex flex-col gap-2'>
+                <div className='flex items-center justify-between gap-4 border-b pb-2'>
+                    <div>
+                        Level One Members : {teamDetails?.levelOneMembersCount}
+                    </div>
+                    <div>
+                        Total Deposit : {teamDetails?.levelOneMembersDeposit?.toFixed(1)}
+                    </div>
+                </div>
+                <div className='flex items-center justify-between gap-4 border-b pb-2'>
+                    <div>
+                        Level Two Members : {teamDetails?.levelTwoMembersCount}
+                    </div>
+                    <div>
+                        Total Deposit : {teamDetails?.levelTwoMembersDeposit?.toFixed(1)}
+                    </div>
+                </div>
+                <div className='flex items-center justify-between gap-4 border-b pb-2'>
+                    <div>
+                        Level Three Members : {teamDetails?.levelThreeMembersCount}
+                    </div>
+                    <div>
+                        Total Deposit : {teamDetails?.levelThreeMembersDeposit?.toFixed(1)}
+                    </div>
+                </div>
+                <div className=''>
+                    <div>
+                        Total Team Deposit : {teamDetails?.totalTeamDeposit?.toFixed(1)}
+                    </div>
                 </div>
             </div>
             
@@ -82,7 +119,12 @@ const TeamDetailsTable = () => {
                                         className="bg-white border-b transition duration-300 ease-in-out"
                                         >
                                         <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
+                                            <Link 
+                                            to={`/user-management/users/${item?._id}`}
+                                            className='underline text-primary'
+                                            >
                                             {item?.firstName + ' ' + item?.lastName}
+                                            </Link>
                                         </td>
                                         <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
                                             {item?.phone}

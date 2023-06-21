@@ -69,7 +69,7 @@ const WithdrawTable = () => {
                                 {item?.withdrawAmount}
                             </td>
                             <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-center">
-                                {moment(item?.createdAt).format('MM DDD YYYY')}
+                                {moment(item?.createdAt).format('DD MMM YYYY')}
                             </td>
                             <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-center">
                                 <div className='flex items-center justify-center'>

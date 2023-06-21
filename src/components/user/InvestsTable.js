@@ -18,7 +18,7 @@ const InvestsTable = () => {
     const [currentPage , setCurrentPage] = useState(1);
     const [pages , setPages] = useState(1);
 
-    const queryKey = ['fetch-user-invests' , currentPage]
+    const queryKey = ['fetch-user-invests' , currentPage , id ]
     const { data , isLoading  } = useQuery(queryKey , () => {
         return fetcher(`/invest/user/${id}?page=${currentPage}` , user)
     });

@@ -1,37 +1,67 @@
-import { baseURL } from "config/api";
+import Axios, { baseURL } from "config/api";
 import { useChatContext } from "context/chatContext";
 import { conversations } from "data/conversations";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useSelector } from "react-redux";
-import { ClipLoader } from "react-spinners";
+import { ClipLoader, HashLoader } from "react-spinners";
 import { io } from "socket.io-client";
 import fetcher from "utils/fetcher";
+import toastError from "utils/toastError";
 
 
 const Conversations = () => {
     const { selectedChat  , setSelectedChat , allChats , setAllChats , chats , setChats } = useChatContext();
     const [socket , setSocket] = useState(null);
 
+    const [hasMore, setHasMore] = useState(true);
+    const [currentPage , setCurrentPage] = useState(1);
+    const [pages , setPages] = useState(1);
+    const [docsCount , setDocsCount] = useState(0);
+    const [loading , setLoading] = useState(false);
+    const [loadMoreLoading , setLoadMoreLoading] = useState(false);
+
     const { user } = useSelector(state => state.auth);
 
-    const queryKey = 'fetch-chats';
-    const { isLoading , data } = useQuery(queryKey , () => fetcher('/chat/admin' , user))
-
     useEffect(() => {
-        if(data) {
-            setChats(() => data?.data?.data?.docs?.sort((a, b) => {
-                if (a?.latestMessage?.status === 'unread' && b?.latestMessage?.status === 'read') {
-                    return -1; // 'unread' status comes first
-                } else if (a?.latestMessage?.status === 'read' && b?.latestMessage?.status === 'unread') {
-                    return 1; 
-                } else {
-                    return 0; 
+        fetchData(1);
+        return () => setChats([]);
+    }, []);
+
+
+    const fetchData = async (newPage) => {
+        try {
+            if(newPage === 1){
+                setLoading(true)
+            }else {
+                setLoadMoreLoading(true);
+            }
+            const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/chat/admin?page=${newPage}` , {
+                headers : {
+                    Authorization : `Bearer ${user?.token}`
                 }
-            }));
-            setAllChats(data?.data?.data?.docs)
+            });
+            setChats(prev => [...prev , ...docs]);
+            if(docs?.length > 0) {
+                if(page === pages) {
+                    setHasMore(false);
+                } else {
+                    setHasMore(true)
+                }
+            }else {
+                setHasMore(false);
+            }
+            setCurrentPage(page);
+            setPages(pages);
+            setDocsCount(docCount);
+            setLoading(false);
+            setLoadMoreLoading(false);
+        } catch (error) {
+            setLoading(false);
+            setLoadMoreLoading(false);
+            toastError(error);            
         }
-    }, [data])
+    }
     
     const handleSearch = (e) => {
         const query = e.target.value;
@@ -70,7 +100,6 @@ const Conversations = () => {
         setSelectedChat(newChat);
     }
 
-
     return (
         <div>
             <div>
@@ -81,9 +110,9 @@ const Conversations = () => {
                 onChange={handleSearch}
                 />
             </div>
-            <div className='shadow-bg mt-4 h-[500px] overflow-auto'>
+            <div className='shadow-bg mt-4 h-[400px] overflow-auto pb-10'>
                 {
-                    isLoading
+                    loading
                     ? 
                         <div className="flex items-center justify-center w-full h-full">
                             <ClipLoader size={20} />
@@ -91,34 +120,53 @@ const Conversations = () => {
                     :
                     chats?.length > 0
                     ?
-                        chats?.map(chat => (
-                            <div className={`flex items-center gap-4 py-4 px-4  cursor-pointer border-b
-                            ${selectedChat?._id === chat?._id ? 'bg-primary text-pure hover:bg-primary rounded-md' : 'hover:bg-gray-200'}
-                            `}
-                            onClick={() => selectChatHanlder(chat)}
-                            key={chat?._id}
-                            >
-                                <div className="rounded-full border p-1">
-                                    <img 
-                                    src={baseURL + chat?.user?.image} 
-                                    alt={chat?.chatName} 
-                                    className='w-[40px] h-[40px] rounded-full object-cover'
-                                    />
-                                </div>
-                                <div>
-                                    <p>{chat?.chatName}</p>
-                                    <p className={`${selectedChat?._id === chat?._id ? 'text-gray-100' : 'text-gray-500'} text-[13px] -translate-y-1`}>{chat?.user?.phone}</p>
-                                </div>
-                                {
-                                    chat?.latestMessage?.status === 'unread' && selectedChat?._id !== chat?._id && chat?.latestMessage?.sender?._id !== user?._id
-                                    ?
-                                        <div className="text-[10px] bg-purple-500 rounded-full py-[1px] px-1 text-white">
-                                            new message
+                        <>
+                            {
+                                chats?.map(chat => (
+                                    <div className={`flex items-center gap-4 py-4 px-4  cursor-pointer border-b
+                                    ${selectedChat?._id === chat?._id ? 'bg-primary text-pure hover:bg-primary rounded-md' : 'hover:bg-gray-200'}
+                                    `}
+                                    onClick={() => selectChatHanlder(chat)}
+                                    key={chat?._id}
+                                    >
+                                        <div className="rounded-full border p-1">
+                                            <img 
+                                            src={baseURL + chat?.user?.image} 
+                                            alt={chat?.chatName} 
+                                            className='w-[40px] h-[40px] rounded-full object-cover'
+                                            />
                                         </div>
-                                    : ''
+                                        <div>
+                                            <p>{chat?.chatName}</p>
+                                            <p className={`${selectedChat?._id === chat?._id ? 'text-gray-100' : 'text-gray-500'} text-[13px] -translate-y-1`}>{chat?.user?.phone}</p>
+                                        </div>
+                                        {
+                                            chat?.latestMessage?.status === 'unread' && selectedChat?._id !== chat?._id && chat?.latestMessage?.sender?._id !== user?._id
+                                            ?
+                                                <div className="text-[10px] bg-purple-500 rounded-full py-[1px] px-1 text-white">
+                                                    new message
+                                                </div>
+                                            : ''
+                                        }
+                                    </div>
+                                ))
+                            }
+                            <div className="py-2 flex items-center justify-center">
+                                {
+                                hasMore && 
+                                    <button
+                                    className="text-center text-primary" 
+                                    onClick={() => {
+                                        setCurrentPage(prev => prev+1);
+                                        fetchData(currentPage+1)
+                                    }}
+                                    disabled={loadMoreLoading}
+                                    >
+                                        {loadMoreLoading ? 'fetching...' : 'Load More'}
+                                    </button>
                                 }
                             </div>
-                        ))
+                        </>
                     : 
                         <div className="flex items-center justify-center text-xl font-semibold w-full h-full text-gray-600">
                             No Conversation Found.

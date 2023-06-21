@@ -19,7 +19,7 @@ const DepositsTable = () => {
     const [pages , setPages] = useState(1);
 
 
-    const queryKey = ['fetch-deposits' , currentPage]
+    const queryKey = ['fetch-deposits' , currentPage , id]
     const { data : depositData , isLoading  } = useQuery(queryKey , () => {
         return fetcher(`/deposit/user/${id}?page=${currentPage}` , user)
     });

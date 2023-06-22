@@ -167,7 +167,7 @@ const Chatbox = () => {
                                             messages?.map((item , i) => (
                                                 <div 
                                                 className={`
-                                                ${item?.sender?._id === user?._id  ? 'flex justify-end' : ''}`} 
+                                                ${item?.sender?._id === user?._id  ? 'flex justify-end' : ''} ` } 
                                                 key={i}>
                                                     <div className='flex flex-col '>
                                                     {
@@ -191,10 +191,11 @@ const Chatbox = () => {
                                                             />
                                                         </div>
                                                     }
-                                                    {/* <div className='text-xs '>
+                                                    <div className='text-xs '>
                                                         <TimeAgo date={new Date(item?.createdAt)} />
-                                                    </div> */}
                                                     </div>
+                                                    </div>
+                                                    
                                                 </div>
                                             ))
                                         }

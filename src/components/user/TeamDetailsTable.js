@@ -34,7 +34,6 @@ const TeamDetailsTable = () => {
         }
     } , [data]);
 
-    console.log({ teamData : data })
 
     return (
         <div>
@@ -53,33 +52,53 @@ const TeamDetailsTable = () => {
                 </div>
             </div>
             <div className='shadow-bg p-3 rounded-md mt-4 text-dark flex flex-col gap-2'>
-                <div className='flex items-center justify-between gap-4 border-b pb-2'>
-                    <div>
-                        Level One Members : {teamDetails?.levelOneMembersCount}
+                <div className='border-b pb-2'>
+                    <div className='flex items-center justify-between gap-4 '>
+                        <div>
+                            Level One Members : {teamDetails?.levelOneMembersCount}
+                        </div>
+                        <div>
+                            Total Deposit : {teamDetails?.levelOneMembersDeposit?.toFixed(1)}
+                        </div>
                     </div>
-                    <div>
-                        Total Deposit : {teamDetails?.levelOneMembersDeposit?.toFixed(1)}
-                    </div>
-                </div>
-                <div className='flex items-center justify-between gap-4 border-b pb-2'>
-                    <div>
-                        Level Two Members : {teamDetails?.levelTwoMembersCount}
-                    </div>
-                    <div>
-                        Total Deposit : {teamDetails?.levelTwoMembersDeposit?.toFixed(1)}
+                    <div className='mt-2'>
+                        Level One Commission : {teamDetails?.levelOneCommission}
                     </div>
                 </div>
-                <div className='flex items-center justify-between gap-4 border-b pb-2'>
-                    <div>
-                        Level Three Members : {teamDetails?.levelThreeMembersCount}
+                <div className="border-b pb-2">
+                    <div className='flex items-center justify-between gap-4 '>
+                        <div>
+                            Level Two Members : {teamDetails?.levelTwoMembersCount}
+                        </div>
+                        <div>
+                            Total Deposit : {teamDetails?.levelTwoMembersDeposit?.toFixed(1)}
+                        </div>
                     </div>
-                    <div>
-                        Total Deposit : {teamDetails?.levelThreeMembersDeposit?.toFixed(1)}
+                    <div className='mt-2'>
+                        Level Two Commission : {teamDetails?.levelTwoCommission}
                     </div>
                 </div>
-                <div className=''>
-                    <div>
+                
+                <div className="border-b pb-2">
+                    <div className='flex items-center justify-between gap-4 '>
+                        <div>
+                            Level Three Members : {teamDetails?.levelThreeMembersCount}
+                        </div>
+                        <div>
+                            Total Deposit : {teamDetails?.levelThreeMembersDeposit?.toFixed(1)}
+                        </div>
+                    </div>
+                    <div className='mt-2'>
+                        Level Three Commission : {teamDetails?.levelThreeCommission}
+                    </div>
+                </div>
+                
+                <div className='font-medium'>
+                    <div className=''>
                         Total Team Deposit : {teamDetails?.totalTeamDeposit?.toFixed(1)}
+                    </div>
+                    <div className=''>
+                        Total Team Commission : {teamDetails?.totalTeamCommission}
                     </div>
                 </div>
             </div>

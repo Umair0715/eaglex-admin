@@ -18,12 +18,12 @@ const WithdrawRequests = () => {
     const [status , setStatus] = useState('');
     const [search , setSearch] = useState('');
     const [searchLoading , setSearchLoading] = useState(false);
-
+    const [range , setRange] = useState('');
     const { currentPage , requests } = useSelector(state => state.withdraw);
     const { user } = useSelector(state => state.auth);
 
-    const queryKey = ['fetch-withdraw-requests' , currentPage , status];
-    const url = `/withdraw?status=${status}&page=${currentPage}&keyword=${search}`;
+    const queryKey = ['fetch-withdraw-requests' , currentPage , status , range];
+    const url = `/withdraw?status=${status}&page=${currentPage}&keyword=${search}&range=${range}`;
     const { data , isLoading } = useQuery(queryKey , () => fetcher(url , user) );
 
     useEffect(() => {
@@ -62,7 +62,10 @@ const WithdrawRequests = () => {
                         icon='clipboard-notes'  
                         />
                     </div>
-                    <div>
+                    <div className='flex items-center gap-2'>
+                        <label className='font-medium text-gray-500'>
+                            Status
+                        </label>
                         <select 
                         className='select-box'
                         onChange={e => setStatus(e.target.value)}
@@ -73,6 +76,20 @@ const WithdrawRequests = () => {
                             <option value="declined">Declined</option>
                         </select>
                     </div>
+                    <div className='flex items-center gap-2'>
+                        <label className='font-medium text-gray-500'>
+                            Duration
+                        </label>
+                        <select 
+                        className='sm:w-[200px] w-[100px] py-1.5 px-3 border border-dark rounded-full'
+                        onChange={(e) => setRange(e.target.value) }
+                        >
+                            <option value="">All</option>
+                            <option value="today">Today</option>
+                            <option value="yesterday">Yesterday</option>
+                            <option value="week">This Week</option>
+                        </select>
+                </div>
                 </div>
                 <div className='mt-6 w-[300px]'>
                     <Search 
@@ -80,6 +97,7 @@ const WithdrawRequests = () => {
                     fetcher={searchFetcher}
                     />
                 </div>
+                
                 <div className='mt-6'>
                     {
                         isLoading || searchLoading

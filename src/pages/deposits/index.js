@@ -4,16 +4,20 @@ import Heading from 'components/global/Heading'
 import ItemNotFound from 'components/global/ItemNotFound'
 import Layout from 'components/global/Layout'
 import Loader from 'components/global/Loader'
+import Search from 'components/global/Search'
+import Axios from 'config/api'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCurrentPage, setDocs, setPages } from 'redux/reducers/depositReducer'
 import fetcher from 'utils/fetcher'
+import toastError from 'utils/toastError'
 
 const Deposits = () => {
     const dispatch = useDispatch();
     const [status , setStatus] = useState('');
-
+    const [search , setSearch] = useState('');
+    const [searchLoading , setSearchLoading] = useState(false);
     const { currentPage , deposits } = useSelector(state => state.deposit);
     const { user } = useSelector(state => state.auth);
 
@@ -29,6 +33,24 @@ const Deposits = () => {
             dispatch(setPages(pages));
         }
     }, [dispatch , data]);
+
+    const searchFetcher = async (value) => {
+        try {
+            setSearchLoading(true);
+            const { data : { data : { docs , page , pages } } } = await Axios(`/deposit?status=${status}&keyword=${value}` , {
+                headers : {
+                    Authorization : `Bearer ${user?.token}`
+                }
+            });
+            dispatch(setDocs(docs));
+            dispatch(setCurrentPage(page));
+            dispatch(setPages(pages));
+            setSearchLoading(false);
+        } catch (error) {
+            setSearch(false);
+            toastError(error);
+        }
+    }
 
     return (
         <Layout>
@@ -55,9 +77,15 @@ const Deposits = () => {
                         </select>
                     </div>
                 </div>
+                <div className='mt-4 w-[300px]'>
+                    <Search
+                    setSearch={setSearch}
+                    fetcher={searchFetcher}
+                    />
+                </div>
                 <div className='mt-6'>
                     {
-                        isLoading
+                        isLoading || searchLoading
                         ? 
                             <Loader />
                         : 

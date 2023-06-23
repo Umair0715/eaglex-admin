@@ -82,7 +82,7 @@ const UserDetails = () => {
                                 </h4>
                                 <p>{userDetails?.phone}</p>
                                 
-                                <p>Profit Earned : {userDetails?.totalProfit}</p>
+                                <p>Profit Earned : {userDetails?.totalProfit?.toFixed(2)}</p>
                             </div>
                         </div>
                     }

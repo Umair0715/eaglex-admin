@@ -88,6 +88,18 @@ const WithdrawDetails = () => {
                                             {item?.withdrawAmount}
                                         </p>
                                     </div>
+                                    <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
+                                        <h6 className='font-medium'>Service Charges</h6>
+                                        <p className='text-primary'>
+                                            {item?.withdrawFee}
+                                        </p>
+                                    </div>
+                                    <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
+                                        <h6 className='font-medium'>Transfer Amount</h6>
+                                        <p className='text-primary'>
+                                            {item?.receivedAmount}
+                                        </p>
+                                    </div>
                                     
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Date</h6>

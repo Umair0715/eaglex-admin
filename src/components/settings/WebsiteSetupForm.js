@@ -89,13 +89,13 @@ const WebsiteSetupForm = () => {
                                 value={minWithdraw}
                                 setValue={setMinWithdraw}
                                 />         
-                                {/* <Input 
+                                <Input 
                                 label="Service Charges in %"
                                 placeholder="2"
                                 type='number'
                                 value={platformFee}
                                 setValue={setPlatformFee}
-                                /> */}
+                                />
                             </div>
                             
                         </div>

@@ -32,6 +32,12 @@ const WithdrawTable = () => {
                             Withdraw Amount
                         </th>
                         <th scope="col" className=" font-medium px-6 py-4 text-center">
+                            Service Charges
+                        </th>
+                        <th scope="col" className=" font-medium px-6 py-4 text-center">
+                            Transfer Amount
+                        </th>
+                        <th scope="col" className=" font-medium px-6 py-4 text-center">
                             Date
                         </th>
                         <th scope="col" className=" font-medium px-6 py-4 text-center">
@@ -67,6 +73,12 @@ const WithdrawTable = () => {
                             </td>
                             <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-center">
                                 {item?.withdrawAmount}
+                            </td>
+                            <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-center">
+                                {item?.withdrawFee || 0}
+                            </td>
+                            <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-center">
+                                {item?.receivedAmount || 0}
                             </td>
                             <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-center">
                                 {moment(item?.createdAt).format('DD MMM YYYY')}

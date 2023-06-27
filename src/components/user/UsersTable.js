@@ -10,6 +10,7 @@ import Loader from 'components/global/Loader';
 import ItemNotFound from 'components/global/ItemNotFound';
 import { deleteUser } from 'redux/actions/userActions';
 import { ClipLoader } from 'react-spinners';
+import moment from 'moment';
 
 const UsersTable = ({ setRange}) => {
     const dispatch = useDispatch();
@@ -52,13 +53,16 @@ const UsersTable = ({ setRange}) => {
                         <thead className="border-b text-sm">
                             <tr className='bg-gradient text-white'>
                                 <th scope="col" className=" font-medium px-6 py-4 text-left">
-                                    First Name
-                                </th>
-                                <th scope="col" className=" font-medium px-6 py-4 text-left">
-                                    Last Name
+                                    Full Name
                                 </th>
                                 <th scope="col" className=" font-medium px-6 py-4 text-left">
                                     Phone Number
+                                </th>
+                                <th scope="col" className=" font-medium px-6 py-4 text-left">
+                                    Joined
+                                </th>
+                                <th scope="col" className=" font-medium px-6 py-4 text-center">
+                                    Total Deposit
                                 </th>
                                 <th scope="col" className=" font-medium px-6 py-4 text-center">
                                     ACTIONS
@@ -80,14 +84,17 @@ const UsersTable = ({ setRange}) => {
                                             to={`/user-management/users/${item._id}`}
                                             className='text-primary underline'
                                             >
-                                                {item?.firstName}
+                                                {item?.firstName + " " + item?.lastName}
                                             </Link>
                                         </td>
                                         <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
-                                            {item?.lastName}
+                                            {item?.phone}
                                         </td>
                                         <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
-                                            {item?.phone}
+                                            {moment(item?.createdAt).format('DD MMM YYYY')}
+                                        </td>
+                                        <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-center">
+                                            {item?.totalDepositAmount?.toFixed(2) || 0}
                                         </td>
                                         <td className=" text-gray-900  px-6 py-4 whitespace-nowrap ">
                                             <div className='flex items-end justify-center relative' 

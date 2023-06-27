@@ -42,6 +42,12 @@
     @apply py-1.5 px-2 rounded-full border w-[150px] border-gray-500; 
 }
 
+.gradient-text {
+    background: var(--primaryGradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 .shadow-bg {
     @apply bg-pure rounded-lg shadow-md border;
 }

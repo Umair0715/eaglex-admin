@@ -126,6 +126,9 @@ const TeamDetailsTable = () => {
                                         Joined
                                     </th>
                                     <th scope="col" className=" font-medium px-6 py-4 text-center">
+                                        Total Deposit
+                                    </th>
+                                    <th scope="col" className=" font-medium px-6 py-4 text-center">
                                         Team Level
                                     </th>
                                 </tr>
@@ -150,6 +153,9 @@ const TeamDetailsTable = () => {
                                         </td>
                                         <td className=" text-gray-900  px-6 py-4 whitespace-nowrap">
                                             {moment(item?.createdAt).format('DD MMM YYYY')}
+                                        </td>
+                                        <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-center">
+                                            {item?.totalDepositAmount?.toFixed(2) || 0}
                                         </td>
                                         <td className=" text-gray-900  px-6 py-4 whitespace-nowrap text-center">
                                             {item?.level}

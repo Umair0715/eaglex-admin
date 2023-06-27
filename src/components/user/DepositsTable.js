@@ -1,6 +1,6 @@
 import Pagination from 'components/global/pagination';
 import React, { useEffect, useRef, useState } from 'react'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import useClickOutside from 'utils/clickOutside';
 import usersData from 'data/users'
 import { useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import RequestStatus from 'components/global/RequestStatus';
 
 const DepositsTable = () => {
     const { user } = useSelector(state => state.auth);
+    const navigate = useNavigate();
     const { id } = useParams();
     const [deposits , setDeposits] = useState('');
     const [currentPage , setCurrentPage] = useState(1);
@@ -59,6 +60,9 @@ const DepositsTable = () => {
                                 <th scope="col" className=" font-medium px-6 py-4 text-center">
                                     Status
                                 </th>
+                                <th scope="col" className=" font-medium px-6 py-4 text-center">
+                                    View
+                                </th>
                             </tr>
                         </thead>
                         <tbody className='text-sm'>
@@ -80,6 +84,16 @@ const DepositsTable = () => {
                                     <td className=" px-6 py-4 whitespace-nowrap text-center text-orange-500">
                                         <div className='flex items-center justify-center'>
                                         <RequestStatus status={item?.status} />
+                                        </div>
+                                    </td>
+                                    <td className=" px-6 py-4 whitespace-nowrap text-center text-orange-500">
+                                        <div
+                                        className='py-3 font-medium hover:bg-gray-100 px-4 cursor-pointer flex items-center justify-center gap-1 underline text-primary '
+                                        onClick={() => {
+                                            navigate(`/deposit-requests/details/${item?._id}`)
+                                        }}
+                                            >
+                                                <span>Details</span>
                                         </div>
                                     </td>
                                 </tr>

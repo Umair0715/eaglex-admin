@@ -12,16 +12,17 @@ const Users = () => {
 
     const [range , setRange] = useState('');
     const [search , setSearch] = useState('');
+    const [searchType , setSearchType] = useState('phone');
 
     const dispatch = useDispatch();
     const { currentPage , docsCount  } = useSelector(state => state.user);
     
     useEffect(() => {
-        dispatch(getAllUsers(range, search))
+        dispatch(getAllUsers(range, search , searchType))
     },[currentPage , range]);
 
     const searchFetcher = async (value) => {
-        dispatch(getAllUsers(range , value));
+        dispatch(getAllUsers(range , value , searchType));
     }
 
     return (
@@ -37,7 +38,15 @@ const Users = () => {
                             {docsCount}
                         </div>
                     </div>
-                    <div>
+                    <div className='flex sm:flex-row flex-col items-center gap-2 '>
+                        <label className='font-semibold text-dark'>Search Type</label>
+                        <select 
+                        className='select-box'
+                        onChange={e => setSearchType(e.target.value)}
+                        >
+                            <option value="phone">Phone</option>
+                            <option value="name">Name</option>
+                        </select>
                         <Search setSearch={setSearch} fetcher={searchFetcher} />
                     </div>
                 </div>

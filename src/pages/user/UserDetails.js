@@ -5,8 +5,10 @@ import Loader from 'components/global/Loader';
 import DepositsTable from 'components/user/DepositsTable';
 import InvestsTable from 'components/user/InvestsTable';
 import TeamDetailsTable from 'components/user/TeamDetailsTable';
+import UserWithdrawDetails from 'components/user/WithdrawDetails';
 import Axios, { baseURL } from 'config/api';
 import users from 'data/users';
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import { useSelector } from 'react-redux';
@@ -83,6 +85,7 @@ const UserDetails = () => {
                                 <p>{userDetails?.phone}</p>
                                 
                                 <p>Profit Earned : {userDetails?.totalProfit?.toFixed(2)}</p>
+                                <p>Joined : {moment(userDetails?.createdAt).format('DD MMM YYYY hh:mm a')}</p>
                             </div>
                         </div>
                     }
@@ -124,9 +127,20 @@ const UserDetails = () => {
                         </div>
                     </div>
                     <div className='mt-8'>
-                        <h3 className='heading-sm'>Deposits</h3>
+                        <div className="flex items-center justify-between gap-2">
+                            <h3 className='heading-sm'>Deposits</h3>
+                            <p>
+                                Total Deposited : {userDetails?.totalDepositAmount}
+                            </p>
+                        </div>
                         <div className='mt-4'>
                             <DepositsTable />
+                        </div>
+                    </div>
+
+                    <div className='mt-8'>
+                        <div className='mt-4'>
+                            <UserWithdrawDetails />
                         </div>
                     </div>
                     <div className='mt-12'>                       

@@ -4,10 +4,10 @@ import { toast } from 'react-toastify';
 import toastError from 'utils/toastError';
 
 
-export const getAllUsers = (range , keyword = '') => async (dispatch , getState) => {
+export const getAllUsers = (range , keyword = '' , searchType = '') => async (dispatch , getState) => {
     dispatch(setLoading(true))
     try {
-        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/user/all?range=${range}&keyword=${keyword}&page=${getState()?.user?.currentPage}` , {
+        const { data : { data : { docs , page , pages , docCount } } } = await Axios(`/user/all?range=${range}&keyword=${keyword}&page=${getState()?.user?.currentPage}&searchType=${searchType}` , {
             headers : {
                 Authorization : `Bearer ${getState().auth.user.token}`
             }

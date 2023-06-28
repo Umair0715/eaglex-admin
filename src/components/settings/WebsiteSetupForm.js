@@ -14,6 +14,7 @@ import toastError from 'utils/toastError';
 const WebsiteSetupForm = () => {
     const [minWithdraw , setMinWithdraw] = useState('');
     const [platformFee , setPlatformFee] = useState('');
+    const [extraCommission , setExtraCommission] = useState('');
     const [govtFee , setGovtFee] = useState('');
     const [bankName , setBankName] = useState('');
     const [accountHolder , setAccountHolder] = useState('');
@@ -31,6 +32,7 @@ const WebsiteSetupForm = () => {
         setMinWithdraw(doc?.minWithdraw);
         setPlatformFee(doc?.platformFee);
         setGovtFee(doc?.govtFee);
+        setExtraCommission(doc?.extraCommission)
         setBankName(doc?.bankName);
         setAccountHolder(doc?.accountHolder);
         setAccountNO(doc?.accountNo);
@@ -53,6 +55,7 @@ const WebsiteSetupForm = () => {
                 minWithdraw : Number(minWithdraw) ,
                 platformFee : Number(platformFee) ,
                 govtFee : Number(govtFee) ,
+                extraCommission : Number(extraCommission) ,
                 accountHolder , bankName , accountNo ,
                 levelOneProfit : Number(levelOneProfit) ,
                 levelTwoProfit : Number(levelTwoProfit) ,
@@ -97,7 +100,15 @@ const WebsiteSetupForm = () => {
                                 setValue={setPlatformFee}
                                 />
                             </div>
-                            
+                            <div className='mt-4'>
+                                <Input 
+                                label="Extra Commission in %"
+                                placeholder="2"
+                                type='number'
+                                value={extraCommission}
+                                setValue={setExtraCommission}
+                                />
+                            </div>
                         </div>
                         <div className='mb-'>
                             <Heading title='Bank Details' showIcon={false} />

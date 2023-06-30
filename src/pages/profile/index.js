@@ -9,9 +9,9 @@ const Profile = () => {
         <Layout>
             <div>
                 <div>
-                    <EditProfileForm />
+                    {/* <EditProfileForm /> */}
                 </div>
-                <div className='mt-10'>
+                <div className=''>
                     <UpdatePassword />
                 </div>
             </div>

@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import Loader from 'components/global/Loader';
 import ItemNotFound from 'components/global/ItemNotFound';
 
-const TeamDetailsTable = () => {
+const TeamDetailsTable = ({ userDetails }) => {
     const { id } = useParams();
     const [members , setMembers] = useState([]);
     const [level , setLevel] = useState(null);
@@ -33,6 +33,7 @@ const TeamDetailsTable = () => {
             setTeamDetails(data?.data?.data);
         }
     } , [data]);
+
 
 
     return (
@@ -98,7 +99,19 @@ const TeamDetailsTable = () => {
                         Total Team Deposit : {teamDetails?.totalTeamDeposit?.toFixed(1)}
                     </div>
                     <div className=''>
-                        Total Team Commission : {teamDetails?.totalTeamCommission}
+                        Total Team Invest : {Math.round(teamDetails?.totalTeamInvestment) || 0}
+                    </div>
+                    <div className=''>
+                        Total Team Commission : {Math.round(teamDetails?.totalTeamCommission) || 0}
+                    </div>
+                    <div className=''>
+                        User Extra Commission : {userDetails?.extraCommission || 0}
+                    </div>
+                    <div className=''>
+                        Re-invest Commission : {userDetails?.reInvestCommission || 0}
+                    </div>
+                    <div className=''>
+                        Team Commission + Extra Commission + Re-invest Commission : {Math.round(Number(teamDetails?.totalTeamCommission) + Number(userDetails?.extraCommission) + Number(userDetails?.reInvestCommission) ) || 0}
                     </div>
                 </div>
             </div>

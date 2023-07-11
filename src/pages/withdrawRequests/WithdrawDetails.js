@@ -110,19 +110,19 @@ const WithdrawDetails = () => {
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Bank Name</h6>
                                         <p className='text-primary'>
-                                            {item?.bankDetails?.bankName}
+                                            {item?.withdrawBank?.bankName || item?.bankDetails?.bankName}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Account Holder</h6>
                                         <p className='text-primary'>
-                                            {item?.bankDetails?.accountHolder}
+                                        {item?.withdrawBank?.accountHolder || item?.bankDetails?.accountHolder}
                                         </p>
                                     </div>
                                     <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
                                         <h6 className='font-medium'>Account Number</h6>
                                         <p className='text-primary'>
-                                            {item?.bankDetails?.accountNo}
+                                            {item?.withdrawBank?.accountNo || item?.bankDetails?.accountNo}
                                         </p>
                                     </div>
 
@@ -145,7 +145,7 @@ const WithdrawDetails = () => {
                                 <div className='mt-4'>
                                     <TextArea
                                     placeholder='Write short description'
-                                    label='Description'
+                                    label='Reason'
                                     value={description}
                                     setValue={setDescription}
                                     />

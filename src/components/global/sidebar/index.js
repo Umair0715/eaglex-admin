@@ -180,14 +180,14 @@ const Sidebar = () => {
                                 </li>
                             </ul>
                         }
-                        <li 
+                        {/* <li 
                         className={`${isActive('support-chat') ? 'active' : ''} sideMenu-item`}
                         >
                             <Link to='/support-chat'>   
                                 <i className="uil uil-envelope"></i>
                                 <span>Support Chat</span>
                             </Link>
-                        </li>
+                        </li> */}
                        
                         <Link to='/login' 
                         className={`sideMenu-item signout`}

@@ -24,6 +24,8 @@ const AddNewOfferForm = () => {
     const [profit , setProfit] = useState('');
     const [loading , setLoading] = useState(false);
     const [offer , setOffer] = useState('');
+    const [investCount , setInvestCount] = useState(0);
+    const [description , setDescription] = useState('');
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -62,6 +64,8 @@ const AddNewOfferForm = () => {
                 setStatus(doc?.status);
                 setImage(baseURL + doc?.image)
                 setOffer(doc);
+                setInvestCount(doc?.investCount)
+                setDescription(doc?.description)
             } catch (err) {
                 setLoading(false)
                 console.log('error' , err);
@@ -79,7 +83,9 @@ const AddNewOfferForm = () => {
             depositRange : [parseInt(depositRange.split('-')[0]) , parseInt(depositRange.split('-')[1])] ,
             timePeriod : Number(timePeriod) ,
             profit : Number(profit) ,
-            company 
+            company , 
+            investCount : Number(investCount) ,
+            description
         }
         if(isBase64(image)) {
             data.image = image;
@@ -150,16 +156,30 @@ const AddNewOfferForm = () => {
                             placeholder='Enter offer status'
                             value={status}
                             setValue={setStatus}
-                            required
                             />
                         </div>
-                        <div>
+                        <div className='flex sm:flex-row flex-col items-center justify-between gap-4'>
                             <Input 
                             label='Deposit Range'
                             placeholder='hint : 1000-20000'
                             value={depositRange}
                             setValue={setDepositRange}
                             required
+                            />
+                            <Input 
+                            type='number'
+                            label='Invest Count'
+                            placeholder='hint : 5000'
+                            value={investCount}
+                            setValue={setInvestCount}
+                            />
+                        </div>
+                        <div>
+                            <Input 
+                            label='Description'
+                            placeholder='Short note about offer'
+                            value={description}
+                            setValue={setDescription}
                             />
                         </div>
                         <div>

@@ -15,9 +15,11 @@ import fetcher from 'utils/fetcher'
 import toastError from 'utils/toastError'
 
 const UserWithdrawDetails = () => {
+    
     const dispatch = useDispatch();
     const [status , setStatus] = useState('');
     const [range , setRange] = useState('');
+    const [totalApprovedWithdrawAmount , setTotalApprovedWithdrawAmount] = useState(0);
     const { currentPage , requests } = useSelector(state => state.withdraw);
     const { user } = useSelector(state => state.auth);
     const { id } = useParams();
@@ -27,10 +29,11 @@ const UserWithdrawDetails = () => {
 
     useEffect(() => {
         if(data) {
-            const { data : { data : { docs , pages , page } } } = data;
+            const { data : { data : { docs , pages , page , totalApprovedWithdrawAmount } } } = data;
             dispatch(setDocs(docs));
             dispatch(setCurrentPage(page));
             dispatch(setPages(pages));
+            setTotalApprovedWithdrawAmount(totalApprovedWithdrawAmount)
         }
     }, [dispatch , data]);
 
@@ -66,6 +69,12 @@ const UserWithdrawDetails = () => {
                         <option value="yesterday">Yesterday</option>
                         <option value="week">This Week</option>
                     </select>
+                </div>
+                <div className='flex items-center gap-2'>
+                    <h3 className='font-medium text-gray-500'>
+                        Total Approved Withdraw : {totalApprovedWithdrawAmount} 
+                    </h3>
+                   
                 </div>
             </div>
             <div className='mt-6'>

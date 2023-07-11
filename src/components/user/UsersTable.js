@@ -12,7 +12,7 @@ import { deleteUser } from 'redux/actions/userActions';
 import { ClipLoader } from 'react-spinners';
 import moment from 'moment';
 
-const UsersTable = ({ setRange}) => {
+const UsersTable = ({ setRange , setSort }) => {
     const dispatch = useDispatch();
     const dropMenuRef = useRef(null);
     const [showDropMenu , setShowDropMenu] = useState(false);
@@ -31,17 +31,35 @@ const UsersTable = ({ setRange}) => {
 
     return (
         <div className=" shadow-bg overflow-x-auto rounded-lg">
-            <div className='py-4 px-4 flex justify-end'>
-                <select 
-                className='sm:w-[200px] w-[100px] py-1.5 px-3 border border-dark rounded-full'
-                onChange={(e) => setRange(e.target.value) }
-                >
-                    <option value="">All</option>
-                    <option value="today">Today</option>
-                    <option value="week">This Week</option>
-                    <option value="month">This Month</option>
-                    <option value="year">This Year</option>
-                </select>
+            <div className='py-4 px-4 flex justify-end gap-8'>
+                <div className='flex items-center gap-2'>
+                    <label className='font-semibold'>Sort</label>
+                    <select 
+                    className='sm:w-[200px] w-[100px] py-1.5 px-3 border border-dark rounded-full'
+                    onChange={(e) => setSort(e.target.value) }
+                    >
+                        <option value="">All</option>
+                        <option value="totalDepositAmount">
+                            Highest Deposit
+                        </option>
+                        <option value="createdAt">Latest Users</option>
+                    </select>
+                </div>
+                <div className='flex items-center gap-2'>
+                    <label className='font-semibold'>Filter</label>
+                    <select 
+                    className='sm:w-[200px] w-[100px] py-1.5 px-3 border border-dark rounded-full'
+                    onChange={(e) => setRange(e.target.value) }
+                    >
+                        <option value="">All</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                        <option value="withDeposit">Users with Deposit</option>
+                        <option value="withoutDeposit">Users Without Deposit</option>
+                    </select>
+                </div>
             </div>
             {
                 loading

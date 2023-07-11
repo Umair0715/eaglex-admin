@@ -12,9 +12,13 @@
     }
 }
 
-.btn-primary {
+.btn-primary , .btn-block {
     @apply text-pure font-medium rounded-full cursor-pointer flex items-center gap-1 disabled:cursor-not-allowed ; 
     background-image: var(--primaryGradientHover);
+}
+.btn-block {
+    background-image:none ;
+    background-color: rgb(214, 0, 0);
 }
 .btn-primary:hover , .bg-gradientHover{
     background-image: var(--primaryGradient);

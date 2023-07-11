@@ -32,7 +32,7 @@ const DepositRequestDetails = () => {
         if(item) {
             setStatus(item?.status);
             setDescription(item?.description)
-            setTransferAmount(item?.transferAmount)
+            setTransferAmount(item?.transferAmount || (item?.amount + item?.bonusAmount))
         }
     }, [item]);
 
@@ -86,6 +86,18 @@ const DepositRequestDetails = () => {
                                             {item?.amount}
                                         </p>
                                     </div>
+                                    {
+                                        item?.bonusAmount > 0 
+                                        && 
+                                        <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
+                                            <h6 className='font-medium'>
+                                                Bonus Amount
+                                            </h6>
+                                            <p className='text-primary'>
+                                                {item?.bonusAmount}
+                                            </p>
+                                        </div>
+                                    }
                                     {
                                         item?.status === 'approved' &&
                                         <div className='flex items-center justify-between border-b pb-4 sm:text-base text-sm'>
@@ -149,30 +161,6 @@ const DepositRequestDetails = () => {
                                             value={status}
                                             setValue={setStatus}
                                             />
-
-
-
-                                        {/* {
-                                            item?.status === 'approved'
-                                            ? 
-                                                <Input 
-                                                label='Status'
-                                                value={status.toUpperCase()}
-                                                readOnly
-                                                style={{ color : 'var(--primary)'}}
-                                                />
-                                            : 
-                                                <SelectBox
-                                                label='Status'
-                                                options={[
-                                                    { label : 'Approved' , value : 'approved' } ,
-                                                    { label : 'Declined' , value : 'declined' } ,
-                                                    { label : 'Pending' , value : 'pending' } ,
-                                                ]}
-                                                value={status}
-                                                setValue={setStatus}
-                                                />
-                                        } */}
                                     </div>
                                     {
                                         status !== 'declined'
@@ -203,7 +191,7 @@ const DepositRequestDetails = () => {
                                 >
                                     <button 
                                     className="btn-primary py-2 px-12"
-                                    disabled={updateLoading}
+                                    disabled={updateLoading || !status }
                                     onClick={updateHandler}
                                     >
                                         {

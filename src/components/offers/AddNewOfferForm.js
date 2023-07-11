@@ -19,6 +19,8 @@ const AddNewOfferForm = () => {
     const [status , setStatus] = useState('');
     const [image , setImage] = useState('');
     const [profit , setProfit] = useState('');
+    const [investCount , setInvestCount] = useState(0);
+    const [description , setDescription] = useState('');
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -42,7 +44,9 @@ const AddNewOfferForm = () => {
             depositRange : [parseInt(depositRange.split('-')[0]) , parseInt(depositRange.split('-')[1])] ,
             timePeriod : Number(timePeriod) ,
             profit : Number(profit) ,
-            image , company 
+            image , company ,
+            description , 
+            investCount : Number(investCount)
         }
         dispatch(createOffer(data , navigate));
     }
@@ -107,13 +111,27 @@ const AddNewOfferForm = () => {
                     setValue={setStatus}
                     />
                 </div>
-                <div>
+                <div className='flex sm:flex-row flex-col items-center justify-between gap-4'>
                     <Input 
                     label='Deposit Range'
                     placeholder='hint : 1000-20000'
                     value={depositRange}
                     setValue={setDepositRange}
                     required
+                    />
+                    <Input 
+                    label='Invest Count'
+                    placeholder='hint : 5000'
+                    value={investCount}
+                    setValue={setInvestCount}
+                    />
+                </div>
+                <div>
+                    <Input 
+                    label='Description'
+                    placeholder='Short note about offer'
+                    value={description}
+                    setValue={setDescription}
                     />
                 </div>
                 <div>

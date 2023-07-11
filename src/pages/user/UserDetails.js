@@ -2,9 +2,11 @@ import BackBtn from 'components/global/BackBtn'
 import Input from 'components/global/Input';
 import Layout from 'components/global/Layout';
 import Loader from 'components/global/Loader';
+import RequestStatus from 'components/global/RequestStatus';
 import DepositsTable from 'components/user/DepositsTable';
 import InvestsTable from 'components/user/InvestsTable';
 import TeamDetailsTable from 'components/user/TeamDetailsTable';
+import UserNote from 'components/user/UserNote';
 import UserWithdrawDetails from 'components/user/WithdrawDetails';
 import Axios, { baseURL } from 'config/api';
 import users from 'data/users';
@@ -22,8 +24,9 @@ const UserDetails = () => {
     const { id } = useParams();
     const { user } = useSelector(state => state.auth);
     const [userDetails , setUserDetails] = useState('');
-    const [balance , setBalance] = useState('');
+    const [balance , setBalance] = useState(0);
     const [walletLoading , setWalletLoading] = useState(false);
+    const [blockLoading , setBlockLoading] = useState(false);
 
     const { data : userData , isLoading : userLoading } = useQuery(['fetch-user-details' , id] , () => {
         return fetcher(`/user/details/${id}` , user)
@@ -33,9 +36,10 @@ const UserDetails = () => {
     useEffect(() => {
         if (userData) {
             setUserDetails(userData?.data?.data?.doc);
-            setBalance(userData?.data?.data?.doc?.wallet?.totalBalance?.toFixed(2))
+            setBalance(Math.round(userData?.data?.data?.doc?.wallet?.totalBalance))
         }
     }, [userData])
+
 
     const handleWalletSubmit = async e => {
         e.preventDefault();
@@ -51,7 +55,7 @@ const UserDetails = () => {
                     }
                 });
                 toast.success(message);
-                setUserDetails(prev => ({...prev , wallet : doc }));
+                setUserDetails(prev => ({...prev , isActive : doc?.isActive }));
                 setWalletLoading(false);
             } catch (error) {
                 setWalletLoading(false);
@@ -60,10 +64,76 @@ const UserDetails = () => {
         }
     }
 
+
+    const blockUserHandler = async (status) => {
+        if(window.confirm(`Are you sure? You want to ${status} this user?`)){
+            try {
+                setBlockLoading(true);
+                const { data : { data : { message , doc } } } = await Axios.put(`/user/block/${id}` , 
+                { isActive : status === 'block' ? false : true } 
+                , {
+                    headers : {
+                        Authorization : `Bearer ${user?.token}`
+                    }
+                });
+                toast.success(message);
+                setUserDetails(() => ({...doc}));
+                setBlockLoading(false);
+            } catch (error) {
+                setBlockLoading(false);
+                toastError(error);
+            }
+        }
+    }
+
     return (
         <Layout>
             <div>
-                <BackBtn />
+                <div className="flex items-center justify-between gap-4 sm:flex-row flex-col">
+                    <BackBtn />
+                    <div className='flex items-center gap-2'>
+                        
+                        <div>
+                            <RequestStatus status={userDetails?.isActive ? 'active' : "blocked"} />
+                        </div>
+                        {
+                            userDetails?.isActive
+                            ?
+                                <button 
+                                className={`btn-primary py-1 5 px-4`}
+                                onClick={() => {
+                                    blockUserHandler('block')
+                                }}
+                                disabled={blockLoading}
+                                >
+                                    {
+                                        blockLoading
+                                        ? 
+                                            <ClipLoader size={15} color='white' />
+                                        : 
+                                            'Block User'
+                                    }
+                                </button>
+                            : 
+                                <button 
+                                className={`btn-primary py-1 5 px-4`}
+                                onClick={() => {
+                                    blockUserHandler('unblock')
+                                }}
+                                disabled={blockLoading}
+                                >
+                                    {
+                                        blockLoading
+                                        ? 
+                                            <ClipLoader size={15} color='white' />
+                                        : 
+                                            'Unblock User'
+                                    }
+                                </button>
+                                    
+                        }
+                    </div>
+                </div>
                 <div className=''>
                     {
                         userLoading
@@ -84,11 +154,15 @@ const UserDetails = () => {
                                 </h4>
                                 <p>{userDetails?.phone}</p>
                                 
-                                <p>Profit Earned : {userDetails?.totalProfit?.toFixed(2)}</p>
+                                <p>Profit Earned : {Math.round(userDetails?.totalProfit) || 0}</p>
                                 <p>Joined : {moment(userDetails?.createdAt).format('DD MMM YYYY hh:mm a')}</p>
                             </div>
                         </div>
                     }
+                    <UserNote 
+                    userDetails={userDetails} 
+                    setUserDetails={setUserDetails} 
+                    />
                     <div className='mt-8 shadow-bg'>
                         <div className="bg-gradient py-2 text-white text-center rounded-lg">
                             <h3 className='text-lg font-semibold text-white'>Wallet Details</h3>
@@ -97,7 +171,7 @@ const UserDetails = () => {
                             <Input
                             type='number'
                             label='Wallet Balance'
-                            value={balance}
+                            value={balance || 0}
                             setValue={setBalance}
                             min={0}
                             />
@@ -144,7 +218,7 @@ const UserDetails = () => {
                         </div>
                     </div>
                     <div className='mt-12'>                       
-                        <TeamDetailsTable />
+                        <TeamDetailsTable userDetails={userDetails} />
                     </div>
                 </div>
             </div>

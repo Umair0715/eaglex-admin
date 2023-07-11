@@ -84,6 +84,7 @@ const Cards = ({ stats }) => {
                             {formatLargeNumber(stats?.totalApprovedDepositAmount)}
                         </p>
                         <h3 className='font-semibold '>Total Approved Deposit</h3>
+                        <h6 className='text-sm font-semibold mt-4'>Total Requests : {stats?.totalApprovedDepositsCount}</h6>
                     </div>
 
                     <div className='shadow-bg rounded-md p-4 flex flex-col gap-1 items-center hover:shadow-lg'>
@@ -91,15 +92,17 @@ const Cards = ({ stats }) => {
                             {formatLargeNumber(stats?.todayApprovedDepositAmount)}
                         </p>
                         <h3 className='font-semibold '>Today Approved Deposit</h3>
+                        <h6 className='text-sm font-semibold mt-4'>Total Requests : {stats?.todayApprovedDepositsCount}</h6>
                     </div>
+                    
 
                     <div className='shadow-bg rounded-md p-4 flex flex-col gap-1 items-center hover:shadow-lg'>
                         <p className='font-bold text-3xl gradient-text'>
                             {formatLargeNumber(stats?.todayPendingDepositAmount)}
                         </p>
                         <h3 className='font-semibold '>Today Pending Deposit</h3>
+                        <h6 className='text-sm font-semibold mt-4'>Total Requests : {stats?.todayPendingDepositsCount}</h6>
                     </div>
-
                     {/* <div className='shadow-bg rounded-md p-4 flex flex-col gap-1 items-center'>
                         <p className='font-bold text-3xl gradient-text'>
                             {formatLargeNumber(stats?.todayTotalDepositAmount)}
@@ -107,6 +110,7 @@ const Cards = ({ stats }) => {
                         <h3 className='font-semibold '>Today Total Deposit</h3>
                     </div> */}
                 </div>
+             
             </div>
             <div className='mt-6'>
                 {/* <h1 className='text-xl font-semibold '>Withdraw Stats</h1> */}
@@ -116,6 +120,7 @@ const Cards = ({ stats }) => {
                             {formatLargeNumber(stats?.totalApprovedWithdrawAmount)}
                         </p>
                         <h3 className='font-semibold '>Total Approved Withdraw</h3>
+                        <h6 className='text-sm font-semibold mt-4'>Total Requests : {stats?.totalApprovedWithdrawCount}</h6>
                     </div>
 
                     <div className='shadow-bg rounded-md p-4 flex flex-col gap-1 items-center hover:shadow-lg'>
@@ -123,6 +128,7 @@ const Cards = ({ stats }) => {
                             {formatLargeNumber(stats?.todayApprovedWithdrawAmount)}
                         </p>
                         <h3 className='font-semibold '>Today Approved Withdraw</h3>
+                        <h6 className='text-sm font-semibold mt-4'>Total Requests : {stats?.todayApprovedWithdrawCount}</h6>
                     </div>
 
                     <div className='shadow-bg rounded-md p-4 flex flex-col gap-1 items-center hover:shadow-lg'>
@@ -130,6 +136,7 @@ const Cards = ({ stats }) => {
                             {formatLargeNumber(stats?.todayPendingWithdrawAmount)}
                         </p>
                         <h3 className='font-semibold '>Today Pending Withdraw</h3>
+                        <h6 className='text-sm font-semibold mt-4'>Total Requests : {stats?.todayPendingWithdrawCount}</h6>
                     </div>
 
                     {/* <div className='shadow-bg rounded-md p-4 flex flex-col gap-1 items-center'>

@@ -1,4 +1,3 @@
-
 import Heading from 'components/global/Heading';
 import Input from 'components/global/Input'
 import Loader from 'components/global/Loader';
@@ -23,6 +22,11 @@ const WebsiteSetupForm = () => {
     const [levelTwoProfit , setLevelTwoProfit ] = useState('');
     const [levelThreeProfit , setLevelThreeProfit ] = useState('');
     const [updateLoading , setUpdateLoading] = useState(false);
+    const [investPercentageForWithdraw , setInvestPercentageForWithdraw] = useState(0);
+    const [reInvestLevelOneProfit , setReInvestLevelOneProfit ] = useState('');
+    const [reInvestLevelTwoProfit , setReInvestLevelTwoProfit ] = useState('');
+    const [reInvestLevelThreeProfit , setReInvestLevelThreeProfit ] = useState('');
+    const [depositBonus , setDepositBonus] = useState(0);
 
     const { user } = useSelector(state => state.auth);
 
@@ -39,6 +43,11 @@ const WebsiteSetupForm = () => {
         setLevelOneProfit(doc?.levelOneProfit);
         setLevelTwoProfit(doc?.levelTwoProfit);
         setLevelThreeProfit(doc?.levelThreeProfit);
+        setInvestPercentageForWithdraw(doc?.investPercentageForWithdraw)
+        setReInvestLevelOneProfit(doc?.reInvestLevelOneProfit);
+        setReInvestLevelTwoProfit(doc?.reInvestLevelTwoProfit);
+        setReInvestLevelThreeProfit(doc?.reInvestLevelThreeProfit);
+        setDepositBonus(doc?.depositBonus);
     }
 
     useEffect(() => {
@@ -58,8 +67,10 @@ const WebsiteSetupForm = () => {
                 extraCommission : Number(extraCommission) ,
                 accountHolder , bankName , accountNo ,
                 levelOneProfit : Number(levelOneProfit) ,
-                levelTwoProfit : Number(levelTwoProfit) ,
+                levelTwoProfit : Number(levelTwoProfit) , 
                 levelThreeProfit : Number(levelThreeProfit) ,
+                investPercentageForWithdraw : Number(investPercentageForWithdraw) ,
+                depositBonus : Number(depositBonus)
             }
             const { data : { data : { doc , message } } } = await Axios.post('/setting' , settingsData , {
                 headers : {
@@ -100,13 +111,29 @@ const WebsiteSetupForm = () => {
                                 setValue={setPlatformFee}
                                 />
                             </div>
-                            <div className='mt-4'>
+                            <div className='mt-4 flex sm:flex-row flex-col items-center gap-4'>
                                 <Input 
                                 label="Extra Commission in %"
                                 placeholder="2"
                                 type='number'
                                 value={extraCommission}
                                 setValue={setExtraCommission}
+                                />
+                                <Input 
+                                label="Invest Percentage For Withdraw"
+                                placeholder="Ex : 50"
+                                type='number'
+                                value={investPercentageForWithdraw}
+                                setValue={setInvestPercentageForWithdraw}
+                                />
+                            </div>
+                            <div className='mt-4'>
+                                <Input 
+                                label="Deposit Bonus"
+                                placeholder="2"
+                                type='number'
+                                value={depositBonus}
+                                setValue={setDepositBonus}
                                 />
                             </div>
                         </div>
@@ -163,6 +190,36 @@ const WebsiteSetupForm = () => {
                                 placeholder="hint : 3"
                                 value={levelThreeProfit}
                                 setValue={setLevelThreeProfit}
+                                />
+                            </div>
+                        </div>
+
+
+                         {/* Re-invest Profits */}
+                         <div className='mb-'>
+                            <Heading title='Re-invest Profit' showIcon={false} />
+                        </div>
+                        <div className='shadow-bg p-4 pb-6'>
+                            <div className=' flex sm:flex-row flex-col items-center gap-4'>
+                                <Input 
+                                label="Re-invest Level One Profit %   "
+                                placeholder="hint : 2 "
+                                value={reInvestLevelOneProfit}
+                                setValue={setReInvestLevelOneProfit}
+                                />         
+                                <Input 
+                                label="Re-invest Level Two Profit %"
+                                placeholder="hint : 1.5"
+                                value={reInvestLevelTwoProfit}
+                                setValue={setReInvestLevelTwoProfit}
+                                />
+                            </div>
+                            <div className='mt-4'>
+                                <Input 
+                                label="Re-invest Level Three Profit %"
+                                placeholder="hint : 1"
+                                value={reInvestLevelThreeProfit}
+                                setValue={setReInvestLevelThreeProfit}
                                 />
                             </div>
                         </div>

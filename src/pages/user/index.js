@@ -13,16 +13,17 @@ const Users = () => {
     const [range , setRange] = useState('');
     const [search , setSearch] = useState('');
     const [searchType , setSearchType] = useState('phone');
+    const [sort , setSort] = useState('createdAt');
 
     const dispatch = useDispatch();
     const { currentPage , docsCount  } = useSelector(state => state.user);
     
     useEffect(() => {
-        dispatch(getAllUsers(range, search , searchType))
-    },[currentPage , range]);
+        dispatch(getAllUsers(range, search , searchType , sort))
+    },[currentPage , range , sort]);
 
     const searchFetcher = async (value) => {
-        dispatch(getAllUsers(range , value , searchType));
+        dispatch(getAllUsers(range , value , searchType , sort ));
     }
 
     return (
@@ -51,7 +52,12 @@ const Users = () => {
                     </div>
                 </div>
                 <div className='mt-6'>
-                    <UsersTable range={range} setRange={setRange} />
+                    <UsersTable 
+                    range={range} 
+                    setRange={setRange}
+                    sort={sort}
+                    setSort={setSort}
+                    />
                 </div>
             </div>
         </Layout>

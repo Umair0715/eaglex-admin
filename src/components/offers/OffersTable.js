@@ -123,13 +123,13 @@ const OffersTable = () => {
                 
                 </tbody>
             </table>
-            {
+            {/* {
                 <Pagination 
                 currentPage={currentPage}
                 pageCount={pages}
                 setPage={setCurrentPage}
                 />
-            }
+            } */}
         </div>
     )
 }

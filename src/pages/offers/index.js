@@ -15,18 +15,19 @@ import { setDocs , setPages , setCurrentPage, setDocsCount } from 'redux/reducer
 
 const Offers = () => {
     const dispatch = useDispatch();
-    const { offers , currentPage , docsCount } = useSelector(state => state.offer);
+    const { offers , docsCount } = useSelector(state => state.offer);
 
-    const queryKey = ['fetch-offers' , currentPage]
-    const { isLoading , data } = useQuery(queryKey , () => Axios(`/offer?page=${currentPage}`));
+    const { isLoading , data } = useQuery('fetch-offers' , () => Axios(`/offer`));
 
 
     useEffect(() => {
         if(data){
             dispatch(setDocs(data?.data?.data?.docs));
-            dispatch(setCurrentPage(data?.data?.data?.page));
-            dispatch(setPages(data?.data?.data?.pages));
             dispatch(setDocsCount(data?.data?.data?.docCount));
+            // dispatch(setCurrentPage(data?.data?.data?.page));
+            // dispatch(setPages(data?.data?.data?.pages));
+
+            // pagination hmny backend sy remove kr di h
         }
     }, [data , dispatch]);
 
